@@ -7,22 +7,26 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div>
+    <div className="bg-blue-100 border-4 border-blue-500 rounded-lg p-8">
       <div className="flex justify-center gap-8 mb-8">
         <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="h-24 p-2.5 hover:drop-shadow-lg transition" alt="Vite logo" />
+          <img src={viteLogo} className="h-40 p-3 hover:drop-shadow-lg transition" alt="Vite logo" />
         </a>
         <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="h-24 p-2.5 hover:drop-shadow-lg transition" alt="React logo" />
+          <img src={reactLogo} className="h-40 p-3 hover:drop-shadow-lg transition" alt="React logo" />
         </a>
       </div>
 
+      <br></br>
+
       <h1>Vite + TypeScript: Deployed with Vercel 🚀</h1>
+
+      <br></br>
       <p className="text-center bg-gray-300">If you can read this on the live site, continuous deployment is working.</p>
       
       <button 
         onClick={() => setCount((count) => count + 1)}
-        className="mt-6 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+        className="mt-6 px-8 py-4 text-lg font-semibold bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
       >
         count is {count}
       </button>
