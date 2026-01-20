@@ -2,36 +2,70 @@ import { useState } from 'react'
 import './App.css'
 import viteLogo from '/vite.svg'
 import reactLogo from '../src/assets/react.svg'
+import "./sandbox/trackerBasics"
+import { trackerCard } from './sandbox/trackerBasics'
+import { projects } from "./data/projects";
+import { countByStatus, formatDueDate, getProjectsByStatus } from "./utils/projectUtils";
 
 function App() {
   const [count, setCount] = useState(0)
+   const active = getProjectsByStatus(projects, "active");
 
   return (
-    <div className="bg-blue-100 border-4 border-blue-500 rounded-lg p-8">
-      <div className="flex justify-center gap-8 mb-8">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="h-40 p-3 hover:drop-shadow-lg transition" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="h-40 p-3 hover:drop-shadow-lg transition" alt="React logo" />
-        </a>
+    <>
+      <div className="bg-blue-100 border-4 border-blue-500 rounded-lg p-8">
+        <div className="flex justify-center gap-8 mb-8">
+          <a href="https://vitejs.dev" target="_blank">
+            <img src={viteLogo} className="h-40 p-3 hover:drop-shadow-lg transition" alt="Vite logo" />
+          </a>
+          <a href="https://react.dev" target="_blank">
+            <img src={reactLogo} className="h-40 p-3 hover:drop-shadow-lg transition" alt="React logo" />
+          </a>
+        </div>
+
+        <br></br>
+
+        <h1>Vite + TypeScript: Deployed with Vercel 🚀</h1>
+
+        <br></br>
+        <p className="text-center bg-gray-300">If you can read this on the live site, continuous deployment is working.</p>
+        
+        <button 
+          onClick={() => setCount((count) => count + 1)}
+          className="mt-6 px-8 py-4 text-lg font-semibold bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+        >
+          count is {count}
+        </button>
       </div>
+      <div className="mt-10 text-center text-gray-600">
+        <p>{JSON.stringify(trackerCard, null, 2)}</p>
+      </div>
+      <div className="mt-10 p-6 bg-green-100 border-4 border-green-500 rounded-lg">
+<section style={{ marginTop: 3 }}>
+        <h2>Summary</h2>
+        <ul>
+          <li>Planned: {countByStatus(projects, "planned")}</li>
+          <li>Active: {countByStatus(projects, "active")}</li>
+          <li>Blocked: {countByStatus(projects, "blocked")}</li>
+          <li>Done: {countByStatus(projects, "done")}</li>
+        </ul>
+      </section>
 
-      <br></br>
-
-      <h1>Vite + TypeScript: Deployed with Vercel 🚀</h1>
-
-      <br></br>
-      <p className="text-center bg-gray-300">If you can read this on the live site, continuous deployment is working.</p>
-      
-      <button 
-        onClick={() => setCount((count) => count + 1)}
-        className="mt-6 px-8 py-4 text-lg font-semibold bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-      >
-        count is {count}
-      </button>
-    </div>
+      <section style={{ marginTop: 3 }}>
+        <h2>Active Projects</h2>
+        <ul>
+          {active.map((p) => (
+            <li key={p.id}>
+              <strong>{p.name}</strong> — Due: {formatDueDate(p)} — Tags: {p.tags.join(", ")}
+            </li>
+          ))}
+        </ul>
+      </section>
+      </div>
+    </>
   );
 }
+
+
 
 export default App;
