@@ -1,5 +1,5 @@
 // src/utils/projectUtils.ts
-import type { Project, ProjectStatus } from "../models/project";
+import type { Project, ProjectStatus, } from "../models/project";
 
 export function getProjectsByStatus(
   projects: Project[],

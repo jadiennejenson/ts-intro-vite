@@ -1,4 +1,6 @@
-export type ProjectStatus = "draft" | "active" | "paused" | "completed";
+export type ProjectStatus = "blocked" | "draft" | "active" | "paused" | "done" | "completed";
+
+export type StatusInput = ProjectStatus | string | null | undefined;
 
 export interface Project {
   /** A stable identifier we never want to accidentally change */
@@ -18,6 +20,30 @@ export interface Project {
 
   /** Optional free-form notes */
   notes?: string;
+}
+
+const allowedStatuses: readonly ProjectStatus[] = [
+  "draft",
+  "active",
+  "paused",
+  "completed",
+] as const;
+
+
+export function normalizeStatus(input: StatusInput): ProjectStatus | null {
+  // Handle null/undefined early
+  if (input == null) return null;
+
+  // If it's already a ProjectStatus, it's safe.
+  // But at runtime it's still just a string, so we validate with a list.
+  if (typeof input === "string") {
+    const trimmed = input.trim().toLowerCase();
+    if ((allowedStatuses as readonly string[]).includes(trimmed)) {
+      return trimmed as ProjectStatus;
+    }
+  }
+
+  return null;
 }
 
 // Removed duplicate Project type declaration
@@ -57,6 +83,10 @@ export function statusLabelSwitch(status: ProjectStatus): string {
       return "Active (in progress)";
     case "paused":
       return "Paused (waiting)";
+    case "blocked":
+      return "Blocked (on hold)";
+    case "done":
+      return "Done (finished)";
     case "completed":
       return "Completed (delivered)";
     default:
