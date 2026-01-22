@@ -29,4 +29,4 @@ export const projectB: Project = {
   name: "Mobile App",
   status: "active",
   tags: ["mobile", "urgent"]
-};
+}
