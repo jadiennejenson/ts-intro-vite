@@ -27,6 +27,6 @@ export interface Project {
 export const projectB: Project = {
   id: "p2",
   name: "Mobile App",
-  // @ts-expect-error - "archived" is not part of ProjectStatus
-  status: "archived",
+  status: "active",
+  tags: ["mobile", "urgent"]
 };
