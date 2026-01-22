@@ -1,4 +1,8 @@
-export type ProjectStatus = "planned" | "active" | "blocked" | "done";
+export type ProjectStatus = "planned" | 
+"active" | 
+"blocked" | "done" 
+| "draft" | "paused" 
+ | "completed";
 
 export interface Project {
   /** A stable identifier we never want to accidentally change */
@@ -20,3 +24,9 @@ export interface Project {
   notes?: string;
 }
 
+export const projectB: Project = {
+  id: "p2",
+  name: "Mobile App",
+  // @ts-expect-error - "archived" is not part of ProjectStatus
+  status: "archived",
+};
