@@ -100,3 +100,50 @@ export function canEditProject(status: ProjectStatus): boolean {
   // Client story rule example: completed projects are read-only.
   return status !== "completed";
 }
+
+export type DraftProject = {
+  id: string;
+  name: string;
+  status: "draft";
+  lastEditedAt: string;
+};
+
+export type ActiveProject = {
+  id: string;
+  name: string;
+  status: "active";
+  etaDays: number;
+};
+
+export type PausedProject = {
+  id: string;
+  name: string;
+  status: "paused";
+  pauseReason: string;
+};
+
+export type CompletedProject = {
+  id: string;
+  name: string;
+  status: "completed";
+  completedAt: string;
+};
+
+export type ProjectRecord =
+  | DraftProject
+  | ActiveProject
+  | PausedProject
+  | CompletedProject;
+
+export function formatProjectRecord(p: ProjectRecord): string {
+  switch (p.status) {
+    case "draft":
+      return `${p.name} (Draft) — last edited ${p.lastEditedAt}`;
+    case "active":
+      return `${p.name} (Active) — ETA ${p.etaDays} days`;
+    case "paused":
+      return `${p.name} (Paused) — reason: ${p.pauseReason}`;
+    case "completed":
+      return `${p.name} (Completed) — done on ${p.completedAt}`;
+  }
+}

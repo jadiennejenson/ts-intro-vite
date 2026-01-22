@@ -7,6 +7,8 @@ import { trackerCard } from './sandbox/trackerBasics'
 import { projects } from "./data/projects";
 import { countByStatus, formatDueDate, getProjectsByStatus } from "./utils/projectUtils";
 import type { ProjectStatus } from "./models/project";
+import { formatProjectRecord, type ProjectRecord } from "./models/project.ts";
+
 
 const projectA = { name: "Project A", status: "active" as ProjectStatus };
 
@@ -36,6 +38,17 @@ const lines = [
   `Status (switch): ${statusLabelSwitch(projectA.status)}`,
   `Can edit? ${canEditProject(projectA.status)}`,
 ];
+
+const records: ProjectRecord[] = [
+  { id: "p10", name: "Brand Refresh", status: "draft", lastEditedAt: "2025-12-31" },
+  { id: "p11", name: "Client Portal", status: "active", etaDays: 14 },
+  { id: "p12", name: "SEO Audit", status: "paused", pauseReason: "Waiting on content" },
+  { id: "p13", name: "Landing Page", status: "completed", completedAt: "2025-12-15" },
+];
+
+for (const r of records) {
+  lines.push(formatProjectRecord(r));
+}
 
 
 
