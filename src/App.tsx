@@ -6,6 +6,37 @@ import "./sandbox/trackerBasics"
 import { trackerCard } from './sandbox/trackerBasics'
 import { projects } from "./data/projects";
 import { countByStatus, formatDueDate, getProjectsByStatus } from "./utils/projectUtils";
+import type { ProjectStatus } from "./models/project";
+
+const projectA = { name: "Project A", status: "active" as ProjectStatus };
+
+function statusLabelIf(status: ProjectStatus): string {
+  if (status === "active") return "Active";
+  if (status === "paused") return "Blocked";
+  if (status === "completed") return "Done";
+  return "Draft";
+}
+
+function statusLabelSwitch(status: ProjectStatus): string {
+  switch (status) {
+    case "active": return "Active";
+    case "paused": return "Blocked";
+    case "completed": return "Done";
+    default: return "Draft";
+  }
+}
+
+function canEditProject(status: ProjectStatus): boolean {
+  return status === "active" || status === "draft";
+}
+
+const lines = [
+  `Project: ${projectA.name}`,
+  `Status (if): ${statusLabelIf(projectA.status)}`,
+  `Status (switch): ${statusLabelSwitch(projectA.status)}`,
+  `Can edit? ${canEditProject(projectA.status)}`,
+];
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -44,10 +75,10 @@ function App() {
 <section style={{ marginTop: 3 }}>
         <h2>Summary</h2>
         <ul>
-          <li>Planned: {countByStatus(projects, "planned")}</li>
+          <li>Planned: {countByStatus(projects, "draft")}</li>
           <li>Active: {countByStatus(projects, "active")}</li>
-          <li>Blocked: {countByStatus(projects, "blocked")}</li>
-          <li>Done: {countByStatus(projects, "done")}</li>
+          <li>Blocked: {countByStatus(projects, "paused")}</li>
+          <li>Done: {countByStatus(projects, "completed")}</li>
         </ul>
       </section>
 
@@ -61,6 +92,9 @@ function App() {
           ))}
         </ul>
       </section>
+      </div>
+      <div>
+        `<pre>${lines.join("\n")}</pre>`
       </div>
     </>
   );
