@@ -8,6 +8,7 @@ import { projects } from "./data/projects";
 import { countByStatus, formatDueDate, getProjectsByStatus } from "./utils/projectUtils";
 import type { ProjectStatus } from "./models/project";
 import { formatProjectRecord, type ProjectRecord } from "./models/project.ts";
+import { sampleProjects, validateProject } from "./project-tracker";
 
 
 const projectA = { name: "Project A", status: "active" as ProjectStatus };
@@ -50,6 +51,24 @@ for (const r of records) {
   lines.push(formatProjectRecord(r));
 }
 
+console.log("--- Validating sampleProjects ---");
+for (const p of sampleProjects) {
+  const result = validateProject(p);
+  console.log(p.id, result.ok ? "OK" : result);
+}
+
+console.log("--- Validating intentionally bad input ---");
+const badInput: unknown = {
+  id: "", // invalid
+  name: "  ", // invalid
+  owner: 42, // invalid type
+  status: "in-progress", // not allowed
+  estimateHours: -5, // invalid
+  notes: "" // invalid when provided
+};
+
+const badResult = validateProject(badInput);
+console.log(badResult);
 
 
 function App() {
