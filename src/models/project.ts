@@ -1,4 +1,4 @@
-export type ProjectStatus = "blocked" | "draft" | "active" | "paused" | "done" | "completed";
+export type ProjectStatus = "planned" |"blocked" | "draft" | "active" | "paused" | "done" | "completed";
 
 export type StatusInput = ProjectStatus | string | null | undefined;
 
@@ -23,9 +23,12 @@ export interface Project {
 }
 
 const allowedStatuses: readonly ProjectStatus[] = [
+  "planned",
   "draft",
   "active",
   "paused",
+  "blocked",
+  "done",
   "completed",
 ] as const;
 
@@ -77,6 +80,8 @@ function assertNever(value: never): never {
 
 export function statusLabelSwitch(status: ProjectStatus): string {
   switch (status) {
+    case "planned":
+      return "Planned (upcoming)";
     case "draft":
       return "Draft (not visible to client)";
     case "active":
