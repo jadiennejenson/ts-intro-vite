@@ -15,8 +15,7 @@ let lastSyncedAt: Date | undefined = undefined;
 
 // A value that is intentionally empty (e.g., no description provided)
 let projectDescription: string | null = null;
-
-let foo
+// Updating mutable values
 
 let completedTasks = 1;
 completedTasks = completedTasks + 1; // OK
