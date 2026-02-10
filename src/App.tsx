@@ -70,6 +70,21 @@ const badInput: unknown = {
 const badResult = validateProject(badInput);
 console.log(badResult);
 
+const titlesViaFor: string[] = [];
+//inital value, check the if condition, then increment
+// 1) for loop: the classic way to iterate with an index
+for (let i = 0; i < projects.length; i++) {
+  titlesViaFor.push(projects[i].name);
+}
+
+// 2) forEach: also iterates, but typically used for side effects
+const titlesViaForEach: string[] = [];
+projects.forEach((project) => {
+  titlesViaForEach.push(project.name);
+});
+
+console.log("titlesViaFor", titlesViaFor);
+console.log("titlesViaForEach", titlesViaForEach);
 
 function App() {
   const [count, setCount] = useState(0)
@@ -118,9 +133,9 @@ function App() {
       <section style={{ marginTop: 3 }}>
         <h2>Active Projects</h2>
         <ul>
-          {active.map((p) => (
-            <li key={p.id}>
-              <strong>{p.name}</strong> — Due: {formatDueDate(p)} — Tags: {p.tags.join(", ")}
+          {active.map((project) => (
+            <li key={project.id}>
+              <strong>{project.name}</strong> — Due: {formatDueDate(project)} — Tags: {project.tags.join(", ")}
             </li>
           ))}
         </ul>
