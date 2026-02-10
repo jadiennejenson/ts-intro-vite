@@ -1,5 +1,6 @@
 import { projects } from "../data/projects";
 import { formatDueDate } from "../utils/projectUtils";
+import { findProjectById } from "../utils/projectUtils";
 
 
 type TrackerCard = {
@@ -44,6 +45,13 @@ const openPointsTotal: number = trackerCards
 
 console.log("openCards", openCards);
 console.log("openPointsTotal", openPointsTotal); 
+
+const p3 = findProjectById(projects, "p3");
+if (p3) {
+  console.log("Found p3:", p3.name, p3.status, p3.dueDate);
+} else {
+  console.log("p3 not found (unexpected in sample data)");
+}
 
 function TrackerCard() {
   return (

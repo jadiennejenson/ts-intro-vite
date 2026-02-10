@@ -1,6 +1,7 @@
 // src/utils/projectUtils.ts
 import type { Project, ProjectStatus, } from "../models/project";
 
+
 export function getProjectsByStatus(
   projects: Project[],
   status: ProjectStatus
@@ -33,3 +34,34 @@ export function printDueDateUnsafe(project: Project): string {
   // Correct approach:
   return project.dueDate ? project.dueDate.toUpperCase() : "NO DUE DATE";
 }
+
+// Arrow function + explicit return type.
+// Returns undefined if not found.
+export const findProjectById = (
+  projects: Project[],
+  id: string
+): Project | undefined => {
+  return projects.find((p) => p.id === id);
+};
+
+const toTime = (isoDate: string): number => new Date(isoDate).getTime();
+
+// Converts an ISO date string like "2025-10-01" into a number for comparison.
+// Returns NaN if the date string is invalid.
+export const listOverdueProjects = (
+  projects: Project[],
+  asOf: Date = new Date()
+): Project[] => {
+  const asOfTime = asOf.getTime();
+
+  return projects.filter((p) => {
+    // Type narrowing: if dueDate is missing, this is not overdue.
+    if (!p.dueDate) return false;
+
+    const dueTime = toTime(p.dueDate);
+    // Basic error handling: ignore invalid dates rather than crashing.
+    if (Number.isNaN(dueTime)) return false;
+
+    return dueTime < asOfTime && p.status !== "done";
+  });
+};
