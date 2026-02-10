@@ -118,6 +118,8 @@ export type ActiveProject = {
   name: string;
   status: "active";
   etaDays: number;
+  daysLeft?: number; // optional, can be calculated from dueDate if available
+  days: number;
 };
 
 export type PausedProject = {
@@ -125,6 +127,7 @@ export type PausedProject = {
   name: string;
   status: "paused";
   pauseReason: string;
+  
 };
 
 export type CompletedProject = {
