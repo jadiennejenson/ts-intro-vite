@@ -5,7 +5,7 @@ import reactLogo from '../src/assets/react.svg' */
 import "./sandbox/trackerBasics"
 import { trackerCard } from './sandbox/trackerBasics'
 import { projects } from "./data/projects";
-import { countByStatus, formatDueDate, getProjectsByStatus } from "./utils/projectUtils";
+import { countByStatus } from "./utils/projectUtils";
 import type { ProjectStatus } from "./models/project";
 import { formatProjectRecord, type ProjectRecord } from "./models/project.ts";
 import { validateProject } from "./project-tracker";
@@ -95,7 +95,6 @@ console.log("titlesViaForEach", titlesViaForEach);
 
 function App() {
   const [count, setCount] = useState(0)
-   const active = getProjectsByStatus(projects, "active");
 
   return (
     <>
