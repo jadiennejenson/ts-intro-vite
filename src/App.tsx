@@ -9,6 +9,7 @@ import { countByStatus, formatDueDate, getProjectsByStatus } from "./utils/proje
 import type { ProjectStatus } from "./models/project";
 import { formatProjectRecord, type ProjectRecord } from "./models/project.ts";
 import { validateProject } from "./project-tracker";
+import HelperComponent from "./helpers/HelperComponent";
 
 
 const projectA = { name: "Project A", status: "active" as ProjectStatus };
@@ -99,6 +100,7 @@ function App() {
   return (
     <>
       <div className="bg-blue-100 border-4 border-blue-500 rounded-lg p-8">
+          <HelperComponent />
         <div className="flex justify-center gap-8 mb-8">
           <a href="https://vitejs.dev" target="_blank">
             <img src={viteLogo} className="h-40 p-3 hover:drop-shadow-lg transition" alt="Vite logo" />
