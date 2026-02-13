@@ -20,18 +20,43 @@ export interface Project {
 
   /** Optional free-form notes */
   notes?: string;
+  // These are the “completeness” fields we’ll validate
+  ownerEmail?: string;
+  estimatedHours?: number; // important: 0 is a valid number, but it's falsy
+  description?: string;
+
 }
 
-const allowedStatuses: readonly ProjectStatus[] = [
-  "planned",
-  "draft",
-  "active",
-  "paused",
-  "blocked",
-  "done",
-  "completed",
-] as const;
+export const projects: Project[] = [
+ {
+    id: "p1",
+    name: "Client onboarding flow",
+    status: "draft",
+    ownerEmail: "pm@company.com",
+    estimatedHours: 12,
+    description: "Define steps and screens",
+    tags: [],
+  },{
+    id: "p2",
+    name: "Bug bash",
+    status: "active",
+    ownerEmail: "qa@company.com",
+    estimatedHours: 0, // intentionally 0 to test truthiness pitfalls
+    description: "One-day bug cleanup",
+    tags: [],
+  },{
+    id: "p3",
+    name: "New landing page",
+    status: "blocked",
+    estimatedHours: 8,
+    description: "Waiting on brand assets",
+    tags: [],
+  }
+];
 
+console.log("Loaded projects:", projects);
+
+const allowedStatuses = ["planned", "blocked", "draft", "active", "paused", "done", "completed"] as const;
 
 export function normalizeStatus(input: StatusInput): ProjectStatus | null {
   // Handle null/undefined early
@@ -154,4 +179,91 @@ export function formatProjectRecord(p: ProjectRecord): string {
     case "completed":
       return `${p.name} (Completed) — done on ${p.completedAt}`;
   }
+}
+
+type NextAction =
+  | "Fix missing info"
+  | "Start project"
+  | "Unblock project"
+  | "Submit for review"
+  | "Archive"
+  | "No action";
+
+function hasRequiredInfo(p: Project): boolean {
+  // For the tracker, assume these are required to move forward:
+  // - ownerEmail must be a non-empty string
+  // - estimatedHours must be a number (0 is allowed, but null/undefined is not)
+  // - description must be a non-empty string
+
+  const hasOwner = typeof p.ownerEmail === "string" && p.ownerEmail.trim().length > 0;
+  const hasEstimate = p.estimatedHours != null; // true for 0, false for null/undefined
+  const hasDescription = typeof p.description === "string" && p.description.trim().length > 0;
+
+  return hasOwner && hasEstimate && hasDescription;
+}
+
+function getNextAction(p: Project): NextAction {
+  // Priority rule: if required info is missing, we can't proceed.
+  if (!hasRequiredInfo(p)) {
+    return "Fix missing info";
+  }
+
+  // Status-based routing after data is known-good
+  if (p.status === "draft") {
+    return "Start project";
+  } else if (p.status === "blocked") {
+    return "Unblock project";
+  } else if (p.status === "active") {
+    return "Submit for review";
+  } else if (p.status === "paused") {
+    return "Archive";
+  } else if (p.status === "done" || p.status === "completed") {
+    return "No action";
+  }
+
+  // We shouldn't get here because status is a union type,
+  // but returning something keeps the function total.
+  return "No action";
+}
+
+for (const p of projects) {
+  console.log(`[${p.id}] ${p.name} ->`, getNextAction(p));
+}
+
+function demoTruthiness() {
+  const values = ["", "hello", 0, 5, null, undefined, NaN, [], {}, "0"];
+
+  for (const v of values) {
+    // Stringify carefully so you can “see” values like NaN and empty string
+    const label = typeof v === "string" ? `"${v}"` : String(v);
+    console.log(label.padEnd(12), "=>", v ? "truthy" : "falsy");
+  }
+
+  // Safe patterns
+  const hours = 0;
+  console.log("hours is missing?", hours == null); // false
+  console.log("hours is falsy?", !hours); // true (this is why naive checks break)
+
+  const email = "   ";
+  console.log("email provided?", typeof email === "string" && email.trim().length > 0);
+}
+
+demoTruthiness();
+function getStatusLabel(p: Project): string {
+  // Simple mapping based on one condition
+  return p.status === "blocked" ? "Blocked (needs attention)" : `Status: ${p.status}`;
+}
+
+function shouldShowWarning(p: Project): boolean {
+  // Another simple condition: warn if missing info OR blocked
+  return !hasRequiredInfo(p) ? true : p.status === "blocked";
+}
+
+for (const p of projects) {
+  console.log(
+    `[${p.id}] label=`,
+    getStatusLabel(p),
+    "warning=",
+    shouldShowWarning(p)
+  );
 }

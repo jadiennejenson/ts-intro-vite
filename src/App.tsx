@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
-import viteLogo from '/vite.svg'
-import reactLogo from '../src/assets/react.svg'
+/* import viteLogo from '/vite.svg'
+import reactLogo from '../src/assets/react.svg' */
 import "./sandbox/trackerBasics"
 import { trackerCard } from './sandbox/trackerBasics'
 import { projects } from "./data/projects";
@@ -101,21 +101,21 @@ function App() {
     <>
       <div className="bg-blue-100 border-4 border-blue-500 rounded-lg p-8">
           <HelperComponent />
-        <div className="flex justify-center gap-8 mb-8">
+{/*         <div className="flex justify-center gap-8 mb-8">
           <a href="https://vitejs.dev" target="_blank">
             <img src={viteLogo} className="h-40 p-3 hover:drop-shadow-lg transition" alt="Vite logo" />
           </a>
           <a href="https://react.dev" target="_blank">
             <img src={reactLogo} className="h-40 p-3 hover:drop-shadow-lg transition" alt="React logo" />
           </a>
-        </div>
+        </div> */}
 
         <br></br>
 
-        <h1>Vite + TypeScript: Deployed with Vercel 🚀</h1>
+ {       <h1>MyFirstVite + TypeScript: Deployed with Vercel 🚀</h1>
 
-        <br></br>
-        <p className="text-center bg-gray-300">If you can read this on the live site, continuous deployment is working.</p>
+      /*  <br></br>
+        <p className="text-center bg-gray-300">If you can read this on the live site, continuous deployment is working.</p> */}
         
         <button 
           onClick={() => setCount((count) => count + 1)}
@@ -123,6 +123,9 @@ function App() {
         >
           count is {count}
         </button>
+        <p>Welcome to the onboarding project!
+          You're using Vite, TypeScript, and Git to get ready for real work.
+        </p>
       </div>
       <div className="mt-10 text-center text-gray-600">
         <p>{JSON.stringify(trackerCard, null, 2)}</p>
@@ -138,7 +141,7 @@ function App() {
         </ul>
       </section>
 
-      <section style={{ marginTop: 3 }}>
+  {/*     <section style={{ marginTop: 3 }}>
         <h2>Active Projects</h2>
         <ul>
           {active.map((project) => (
@@ -147,11 +150,11 @@ function App() {
             </li>
           ))}
         </ul>
-      </section>
+      </section> */}
       </div>
-      <div>
+{/*       <div>
         `<pre>${lines.join("\n")}</pre>`
-      </div>
+      </div> */}
     </>
   );
 }
