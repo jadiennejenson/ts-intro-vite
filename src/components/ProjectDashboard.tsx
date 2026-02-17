@@ -8,10 +8,14 @@ export type ProjectDashboardProps = {
 export function ProjectDashboard(props: ProjectDashboardProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    // We'll add querySelector logic in the next step.
-    // For now, just prove the ref is connected after render.
-    console.log("Dashboard container:", containerRef.current);
+useEffect(() => {
+    const root = containerRef.current;
+     if (!root) return;
+    if (!root) {
+      console.warn("ProjectDashboard: containerRef is not set yet.");
+      return;
+    }
+    console.log("ProjectDashboard mounted. Root element:", root);
   }, []);
 
   return (
