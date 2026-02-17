@@ -152,6 +152,7 @@ export type PausedProject = {
   name: string;
   status: "paused";
   pauseReason: string;
+  clientName?: string; // optional, just for demo
   
 };
 
@@ -160,6 +161,7 @@ export type CompletedProject = {
   name: string;
   status: "completed";
   completedAt: string;
+  clientName?: string; // optional, just for demo
 };
 
 export type ProjectRecord =
