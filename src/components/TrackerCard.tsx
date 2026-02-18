@@ -22,6 +22,7 @@ const trackerCards: TrackerCard[] = projects.map((project): TrackerCard => {
   };
 });
 
+
 const activeProjects: TrackerCard[] = trackerCards.filter((card) => card.status === "active");
 
 console.log("trackerCards", trackerCards);
@@ -31,6 +32,14 @@ console.log("original projects still intact", projects);
 
 const openCards: TrackerCard[] = trackerCards
   .filter((t) => t.status === "open")
+//the map function creates a new array by applying a transformation to 
+// each element of the filtered array.
+//this causes the type to widen back to TrackerCard, 
+// since we're not guaranteed to have daysleft on all cards.
+// We can also map to a different shape if we want to, 
+// since this is a new array.
+
+
   .map((t) => ({
     id: t.id,
     heading: t.heading,
@@ -39,8 +48,13 @@ const openCards: TrackerCard[] = trackerCards
     pointsLabel: `${t.daysleft || 0} days left`,
   }));
 
+
 const openPointsTotal: number = trackerCards
+//the filter function creates a new array containing only the 
+// elements of trackerCards that satisfy the condition t.status === "open".
   .filter((t) => t.status === "open")
+
+
   .reduce((sum, t) => sum + (t.daysleft || 0), 0);
 
 console.log("openCards", openCards);
@@ -53,7 +67,11 @@ if (p3) {
   console.log("p3 not found (unexpected in sample data)");
 }
 
+
 function TrackerCard() {
+  //the return statement defines the JSX that will be rendered by this component. 
+  // It includes two sections: one for all projects and another for active projects. 
+  // Each section maps over the respective array of tracker cards and renders a list item for each card, displaying its heading, due date, and status.
   return (
     <section style={{ marginTop: 3 }}>
       <h2>All Projects</h2>
