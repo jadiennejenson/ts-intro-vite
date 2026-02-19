@@ -63,6 +63,8 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
     });
   }, [projects]);
 
+
+
   return (
     <section ref={containerRef} className="mx-auto w-full max-w-5xl p-6" aria-label="Project dashboard">
       <header className="mb-8">
@@ -90,11 +92,11 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
       <div className="mb-10 grid grid-cols-1 gap-4 md:grid-cols-2">
         {projects.map((p) => (
           <article
-            key={`card-${p.id}`}
+            key={p.id}
             data-project-card
             data-id={p.id}
             data-status={p.status}
-            className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+            className="rounded-xl border border-slate-200 bg-white p-4"
           >
             <h2 className="text-lg font-semibold text-slate-900">{p.name}</h2>
             <p className="mt-1 text-sm text-slate-600">Status: {p.status}</p>
