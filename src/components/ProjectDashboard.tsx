@@ -25,7 +25,8 @@ export function ProjectDashboard(props: ProjectDashboardProps) {
     const root = containerRef.current;
     if (!root) return;
 
-  // Get the trimmed id from the input field. If it's empty, log a warning and exit.
+// Get the trimmed id from the input field. If it's empty, log a warning and exit.
+// This function 
     const id = idInputRef.current?.value.trim();
     if (!id) {
       console.warn("Type a project id first.");
