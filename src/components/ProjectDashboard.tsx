@@ -9,6 +9,8 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
   // 1. Unified Refs
   const containerRef = useRef<HTMLElement | null>(null);
   const idInputRef = useRef<HTMLInputElement | null>(null);
+  const cardsContainerRef = useRef<HTMLDivElement | null>(null);
+
 
   // 2. Logic for Finding and Highlighting Rows
   function clearHighlights(root: HTMLElement) {
@@ -41,6 +43,28 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
     detailsBtn?.focus();
   }
 
+   useEffect(() => {
+    const container = cardsContainerRef.current;
+    if (!container) return;
+
+    // Clear previous content so we don't duplicate during HMR
+    container.replaceChildren();
+
+  const card = document.createElement("article");
+    card.className =
+      "rounded-xl border border-slate-200 bg-white p-4 shadow-sm";
+    card.setAttribute("data-testid", "project-card");
+
+    const title = document.createElement("h3");
+    title.className = "text-base font-semibold text-slate-900";
+    title.textContent = `Example card: ${projects[0]?.name ?? "(no project)"}`;
+
+    card.append(title);
+    container.append(card);
+     }, []);
+
+
+     
   // 3. Combined useEffect for logging both Cards and Rows
   useEffect(() => {
     const root = containerRef.current;
