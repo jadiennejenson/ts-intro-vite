@@ -17,7 +17,7 @@ export default function App() {
         <p className="mt-1 text-sm text-slate-600">Sprint 4: DOM Selection & Manipulation</p>
       </div>
 
-      <ProjectDashboard projects={projects} />
+      <ProjectDashboard />
 
       {/* Sprint 3 UI / Legacy Section */}
       <div className="mx-auto w-full max-w-5xl p-4 space-y-6">
