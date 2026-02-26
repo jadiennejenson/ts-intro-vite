@@ -87,6 +87,13 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
     });
   }, [projects]);
 
+  const STATUS_COLORS: Record<string, string> = {
+  active: "text-emerald-600 bg-emerald-50 border-emerald-200",
+  inactive: "text-slate-500 bg-slate-50 border-slate-200",
+  pending: "text-amber-600 bg-amber-50 border-amber-200",
+  // fallback color if status doesn't match
+  default: "text-slate-600 bg-slate-50 border-slate-200",
+};
 
 
   return (
@@ -123,7 +130,7 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
             className="rounded-xl border border-slate-200 bg-white p-4"
           >
             <h2 className="text-lg font-semibold text-slate-900">{p.name}</h2>
-            <p className="mt-1 text-sm text-slate-600">Status: {p.status}</p>
+            <p className={`mt-1 text-sm rounded-md border px-2 py-1 inline-block ${STATUS_COLORS[p.status] ?? STATUS_COLORS.default}`}>Status: {p.status}</p>
           </article>
         ))}
       </div>
