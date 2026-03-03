@@ -47,6 +47,8 @@ export default function App() {
           <pre>{JSON.stringify(trackerCard, null, 2)}</pre>
         </div>
       </div>
+
+      
     </main>
   );
 }

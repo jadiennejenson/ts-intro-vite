@@ -53,7 +53,8 @@ return (
       </div>
 
       <p className="mt-4 text-sm text-slate-600">
-        Current filter: <span className="font-medium">{statusFilter}</span>
+        Showing <span className="font-medium">{visibleProjects.length}</span> of{' '}
+        <span className="font-medium">{projects.length}</span> projects
       </p>
     </div>
   );
