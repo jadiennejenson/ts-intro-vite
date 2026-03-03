@@ -61,7 +61,7 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
 
     card.append(title);
     container.append(card);
-     }, []);
+     }, [projects]);
 
 
      
