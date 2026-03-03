@@ -8,13 +8,12 @@ type StatusFilter = ProjectStatus | 'all';
 export default function ProjectsPage() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
 
-const visibleProjects =
+  const visibleProjects =
     statusFilter === 'all'
       ? projects
       : projects.filter((p) => p.status === statusFilter);
 
-
-return (
+  return (
     <div className="mx-auto w-full max-w-5xl px-4 py-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
@@ -48,14 +47,14 @@ return (
         </div>
       </div>
 
-      <div className="mt-6">
-        <ProjectDashboard projects={visibleProjects} />
-      </div>
-
       <p className="mt-4 text-sm text-slate-600">
         Showing <span className="font-medium">{visibleProjects.length}</span> of{' '}
         <span className="font-medium">{projects.length}</span> projects
       </p>
+
+      <div className="mt-4">
+        <ProjectDashboard projects={visibleProjects} />
+      </div>
     </div>
   );
 }
