@@ -47,6 +47,16 @@ export default function ProjectsPage() {
         </div>
       </div>
 
+            <button
+            type="button"
+            className="h-10 rounded-md border border-slate-300 bg-white px-3 text-sm font-medium text-slate-800 hover:bg-slate-50"
+            onClick={() => {
+              setStatusFilter('all');
+            }}
+          >
+            Clear
+          </button>
+
       <p className="mt-4 text-sm text-slate-600">
         Showing <span className="font-medium">{visibleProjects.length}</span> of{' '}
         <span className="font-medium">{projects.length}</span> projects
