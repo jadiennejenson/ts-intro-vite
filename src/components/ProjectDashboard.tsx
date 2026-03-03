@@ -1,47 +1,43 @@
 import React, { useEffect, useRef } from "react";
 import type { Project } from "../models/project";
+import { projects } from "../data/projects";
 
-export type ProjectDashboardProps = {
-  projects: Project[];
-};
+type StatusTone = "green" | "yellow" | "red";
 
-export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX.Element {
-  // 1. Unified Refs
-  const containerRef = useRef<HTMLElement | null>(null);
-  const idInputRef = useRef<HTMLInputElement | null>(null);
-  const cardsContainerRef = useRef<HTMLDivElement | null>(null);
+function getTone(status: Project["status"]): StatusTone {
+	switch (status) {
+		case "active":
+			return "green";
+		case "blocked":
+			return "red";
+		default:
+			return "yellow";
+	}
+}
 
+function applyStatusClasses(el: HTMLDivElement, tone: StatusTone): void {
+	// Only manage status classes here; do NOT remove highlight classes.
+	el.classList.remove(
+		"border-green-500",
+		"bg-green-50",
+		"text-green-800",
+		"border-yellow-500",
+		"bg-yellow-50",
+		"text-yellow-800",
+		"border-red-500",
+		"bg-red-50",
+		"text-red-800"
+	);
+	if (tone === "green") el.classList.add("border-green-500", "bg-green-50", "text-green-800");
+	if (tone === "yellow") el.classList.add("border-yellow-500", "bg-yellow-50", "text-yellow-800");
+	if (tone === "red") el.classList.add("border-red-500", "bg-red-50", "text-red-800");
+}
 
-  // 2. Logic for Finding and Highlighting Rows
-  function clearHighlights(root: HTMLElement) {
-    const highlighted = root.querySelectorAll<HTMLElement>("[data-role='project-row'].bg-amber-50");
-    highlighted.forEach((el) => {
-      el.classList.remove("bg-amber-50", "ring-1", "ring-amber-300");
-    });
-  }
+const highlightClasses = ["ring-2", "ring-indigo-500", "ring-offset-2", "ring-offset-white"] as const;
 
-  function handleFindById(): void {
-    const root = containerRef.current;
-    const id = idInputRef.current?.value.trim();
-
-    if (!root || !id) {
-      console.warn("Type a project id first.");
-      return;
-    }
-
-    const row = root.querySelector<HTMLElement>(`[data-project-id='${id}']`);
-    if (!row) {
-      console.warn("No row found for id:", id);
-      return;
-    }
-
-    clearHighlights(root);
-    row.classList.add("bg-amber-50", "ring-1", "ring-amber-300");
-    row.scrollIntoView({ behavior: "smooth", block: "center" });
-
-    const detailsBtn = row.querySelector<HTMLButtonElement>("[data-role='details-button']");
-    detailsBtn?.focus();
-  }
+export function ProjectDashboard(): React.ReactElement {
+	const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
+	const statusRefs = useRef<Array<HTMLSpanElement | null>>([]);
 
    useEffect(() => {
     const container = cardsContainerRef.current;
@@ -61,97 +57,68 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
 
     card.append(title);
     container.append(card);
-     }, [projects]);
+     }, []);
 
+	function toggleHighlight(index: number): void {
+		const cardEl = cardRefs.current[index];
+		if (!cardEl) return;
 
-     
-  // 3. Combined useEffect for logging both Cards and Rows
-  useEffect(() => {
-    const root = containerRef.current;
-    if (!root) return;
+		// Toggle each class in our highlight set
+		highlightClasses.forEach((c) => cardEl.classList.toggle(c));
 
-    // Log the Grid Cards
-    const cards = root.querySelectorAll<HTMLElement>("[data-project-card]");
-    cards.forEach((card) => {
-      console.log("Card Data:", { 
-        id: card.dataset.id, 
-        status: card.dataset.status 
-      });
-    });
+		// Decide the final state by checking ONE class
+		const isHighlighted = cardEl.classList.contains("ring-2");
+		cardEl.setAttribute("data-highlighted", String(isHighlighted));
+	}
 
-    // Log the List Rows
-    const rows = root.querySelectorAll<HTMLElement>("[data-role='project-row']");
-    rows.forEach((row) => {
-      const title = row.querySelector(".truncate")?.textContent?.trim();
-      console.log("Found Row:", { id: row.dataset.projectId, title });
-    });
-  }, [projects]);
+	return (
+		<section className="mx-auto max-w-5xl p-6">
+			<h1 className="mb-4 text-2xl font-semibold text-slate-900">Project Dashboard</h1>
+			<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+				{projects.map((p, i) => (
+					<div
+						key={p.id}
+						ref={(el) => {
+							cardRefs.current[i] = el;
+						}}
+						data-project-id={p.id}
+						className="rounded-lg border border-slate-200 bg-white p-4 text-slate-900 shadow-sm"
+					>
+						<div className="flex items-start justify-between gap-4">
+							<div>
+								<h2 className="text-lg font-semibold">{p.name}</h2>
+								<span
+									ref={(el) => {
+										statusRefs.current[i] = el;
+									}}
+									className="mt-2 inline-block text-xs text-slate-700"
+								>
+									Status: {p.status}
+								</span>
+							</div>
 
+							<button
+								type="button"
+								className="rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-900 hover:bg-slate-50"
+								aria-pressed={false}
+								onClick={(e) => {
+									toggleHighlight(i);
 
-
-  return (
-    <section ref={containerRef} className="mx-auto w-full max-w-5xl p-6" aria-label="Project dashboard">
-      <header className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900">Project Dashboard</h1>
-        <p className="text-sm text-slate-600">Find by ID and focus row.</p>
-
-        <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
-          <input
-            ref={idInputRef}
-            type="text"
-            placeholder="Enter project id (e.g., p1)"
-            className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm"
-          />
-          <button
-            type="button"
-            onClick={handleFindById}
-            className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
-          >
-            Find & focus
-          </button>
-        </div>
-      </header>
-
-      {/* Grid Version */}
-      <div className="mb-10 grid grid-cols-1 gap-4 md:grid-cols-2">
-        {projects.map((p) => (
-          <article
-            key={p.id}
-            data-project-card
-            data-id={p.id}
-            data-status={p.status}
-            className="rounded-xl border border-slate-200 bg-white p-4"
-          >
-            <h2 className="text-lg font-semibold text-slate-900">{p.name}</h2>
-            <p className="mt-1 text-sm text-slate-600">Status: {p.status}</p>
-          </article>
-        ))}
-      </div>
-
-      {/* List Version */}
-      <ul className="divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white shadow-sm">
-        {projects.map((p) => (
-          <li
-            key={`row-${p.id}`}
-            data-role="project-row"
-            data-project-id={p.id}
-            className="flex items-center justify-between gap-3 px-4 py-3 transition-colors"
-          >
-            <div className="min-w-0">
-              <div className="truncate text-sm font-semibold text-slate-900">{p.name}</div>
-              <div className="text-xs text-slate-400">ID: {p.id}</div>
-            </div>
-
-            <button
-              type="button"
-              data-role="details-button"
-              className="shrink-0 rounded-md border border-slate-300 px-3 py-1.5 text-sm hover:bg-slate-50 focus:ring-2 focus:ring-slate-400 outline-none"
-            >
-              Details
-            </button>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
+									// Update aria-pressed to match the DOM state after toggling
+									const cardEl = cardRefs.current[i];
+									const isHighlighted = Boolean(cardEl?.classList.contains("ring-2"));
+									(e.currentTarget as HTMLButtonElement).setAttribute(
+										"aria-pressed",
+										String(isHighlighted)
+									);
+								}}
+							>
+								Toggle highlight
+							</button>
+						</div>
+					</div>
+				))}
+			</div>
+		</section>
+	);
 }
