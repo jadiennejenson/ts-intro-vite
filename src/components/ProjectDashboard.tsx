@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import type { Project } from "../models/project";
 
-export type ProjectDashboardProps = {
+type ProjectDashboardProps = {
   projects: Project[];
 };
 
