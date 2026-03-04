@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import type { Project } from "../models/project";
 
+//DOM manipulation is generally not recommended in React, but for this exercise, 
+//we will use it to demonstrate finding and highlighting rows based on project ID.
+
 type ProjectDashboardProps = {
   projects: Project[];
 };
@@ -11,7 +14,10 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
   const idInputRef = useRef<HTMLInputElement | null>(null);
   const cardsContainerRef = useRef<HTMLDivElement | null>(null);
 
-
+//useRef is used to create mutable references to DOM elements. Here, we have three refs:
+// - containerRef: Refers to the main section that contains both the grid and list versions of the projects.
+// - idInputRef: Refers to the input field where users can type a project ID to find.
+// - cardsContainerRef: Refers to the container that holds the grid cards, allowing us to manipulate it directly if needed.
   // 2. Logic for Finding and Highlighting Rows
   function clearHighlights(root: HTMLElement) {
     const highlighted = root.querySelectorAll<HTMLElement>("[data-role='project-row'].bg-amber-50");
@@ -19,6 +25,7 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
       el.classList.remove("bg-amber-50", "ring-1", "ring-amber-300");
     });
   }
+
 
   function handleFindById(): void {
     const root = containerRef.current;
@@ -50,11 +57,15 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
     // Clear previous content so we don't duplicate during HMR
     container.replaceChildren();
 
+    // Create a card for the first project as an example
+    //the createElement method is used to create a new article element that represents a project card.
+
   const card = document.createElement("article");
     card.className =
       "rounded-xl border border-slate-200 bg-white p-4 shadow-sm";
     card.setAttribute("data-testid", "project-card");
 
+    
     const title = document.createElement("h3");
     title.className = "text-base font-semibold text-slate-900";
     title.textContent = `Example card: ${projects[0]?.name ?? "(no project)"}`;
