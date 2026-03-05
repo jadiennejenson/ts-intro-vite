@@ -23,7 +23,8 @@ export interface Project {
   // These are the “completeness” fields we’ll validate
   ownerEmail?: string;
   estimatedHours?: number; // important: 0 is a valid number, but it's falsy
-  description?: string;
+  description?: string; // optional, but if provided should be an array
+  days?: number; // optional, but if provided should be a number
 
 }
 
