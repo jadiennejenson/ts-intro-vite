@@ -26,7 +26,6 @@ priority = "high"; // OK
 // priority = "urgent"; // ❌ Error: Type '"urgent"' is not assignable to type '"low" | "medium" | "high"'.
 
 
-
 console.log({ projectId, projectName, taskCount, isActive });
 console.log({ ownerEmail, maxCollaborators, isArchived, lastSyncedAt, projectDescription });
 console.log({ completedTasks, priority });

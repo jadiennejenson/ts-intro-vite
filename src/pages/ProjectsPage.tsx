@@ -1,13 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState, useMemo, useEffect } from "react"; // Added this
 import type { Project } from "../models/project";
 import { projects as initialProjects } from "../data/projects";
 import { AddProjectForm } from "../components/AddProjectForm";
 import { ProjectDashboard } from "../components/ProjectDashboard";
 
+
 export function ProjectsPage() {
   const [statusFilter, setStatusFilter] = useState<Project["status"] | "all">("all");
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [projects, setProjects] = useState<Project[]>(initialProjects);
+  
+  // ... rest of logic
+
 
   // Find the actual project object based on the ID
   const selectedProject = useMemo(() => 
