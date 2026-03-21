@@ -1,5 +1,7 @@
 export type ProjectStatus = "planned" |"blocked" | "draft" | "active" | "paused" | "done" | "completed";
 
+export type StatusFilter = Project["status"] | "all";
+
 export type StatusInput = ProjectStatus | string | null | undefined;
 
 export interface Project {

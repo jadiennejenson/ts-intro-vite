@@ -6,6 +6,9 @@ import type { Project } from "../models/project";
 
 type ProjectDashboardProps = {
   projects: Project[];
+  selectedProjectId: string | null;
+  onProjectClick: (id: string) => void;
+  onDeleteProject?: (id: string) => void;
 };
 
 export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX.Element {
@@ -97,6 +100,7 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
       console.log("Found Row:", { id: row.dataset.projectId, title });
     });
   }, [projects]);
+  
 
 
 
@@ -160,6 +164,7 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
             >
               Details
             </button>
+
           </li>
         ))}
       </ul>
