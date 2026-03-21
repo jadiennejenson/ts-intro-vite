@@ -23,7 +23,7 @@ export function ProjectDetailPanel({ projectId, projects }: ProjectDetailPanelPr
       {/* 1. Filter Bar */}
       <div className="mb-6">
         <ProjectFilterBar 
-          value={statusFilter} 
+          value={statusFilter}
           count={filteredProjects.length} 
           onChange={setStatusFilter} 
         />

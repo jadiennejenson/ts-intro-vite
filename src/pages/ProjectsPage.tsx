@@ -40,9 +40,9 @@ export default function ProjectsPage() {
             }}
           >
             <option value="all">All</option>
-            <option value={ProjectStatus.Active}>Active</option>
-            <option value={ProjectStatus.Completed}>Completed</option>
-            <option value={ProjectStatus.OnHold}>On Hold</option>
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
+            <option value="archived">Archived</option>
           </select>
         </div>
       </div>

@@ -1,4 +1,4 @@
-export type ProjectStatus = "planned" |"blocked" | "draft" | "active" | "paused" | "done" | "completed";
+export type ProjectStatus = "planned" |"blocked" | "draft" | "active" | "paused" | "done" | "completed" ;
 
 export type StatusFilter = Project["status"] | "all";
 
@@ -146,6 +146,23 @@ export function statusLabelSwitch(status: ProjectStatus): string {
 export function canEditProject(status: ProjectStatus): boolean {
   // Client story rule example: completed projects are read-only.
   return status !== "completed";
+}
+
+export function isProjectOverdue(project: Project): boolean {
+  if (!project.dueDate) return false; // No due date means it can't be overdue
+
+  const today = new Date();
+  const due = new Date(project.dueDate);
+
+  return today > due;
+}
+
+export function isProjectAtRisk(project: Project): boolean {
+  // Example of a more complex condition: a project is at risk if it's active and has less than 3 days left.
+  if (project.status === "active" && project.days !== undefined) {
+    return project.days < 3;
+  }
+  return false;
 }
 
 export type DraftProject = {
