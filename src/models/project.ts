@@ -86,6 +86,20 @@ export const projectA: Project = {
   tags: [], // Add tags as an empty array or with relevant strings
 };
 
+export const projectC: Project = {
+  id: "p3",
+  name: "New Landing Page",
+  status: "blocked",
+  tags: [], // Add tags as an empty array or with relevant strings
+};
+
+export const projectD: Project = {
+  id: "p4",
+  name: "SEO Optimization",
+  status: "planned",
+  tags: [], // Add tags as an empty array or with relevant strings
+};
+
 // ❌ Intentionally wrong to demonstrate safety:
 export const projectB: Project = {
   id: "p2",

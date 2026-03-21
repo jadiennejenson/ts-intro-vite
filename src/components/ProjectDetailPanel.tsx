@@ -1,10 +1,10 @@
-
 // Adjust this import path to where your Project type is defined.
 import type { Project } from "../types";
 import { Modal } from "./Modal";
 import { ProjectDashboard } from "./ProjectDashboard";
 import { ProjectFilterBar } from "./ProjectFilterBar"; // Added this
 import { AddProjectForm } from "./AddProjectForm";
+
 
 type ProjectDetailPanelProps = {
   projectId: string | null;
@@ -44,7 +44,7 @@ export function ProjectDetailPanel({ projectId, projects }: ProjectDetailPanelPr
 
       {/* 3. THE MODAL */}
       <Modal 
-        isOpen={!!selectedProjectId} 
+        isOpen={selectedProjectId !== null} 
         onClose={handleClose}
         title="Project Details"
       >

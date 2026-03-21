@@ -10,3 +10,11 @@ export interface Project {
   /** Optional notes (can be missing) */
   notes?: string;
 }
+
+export type StatusFilter = ProjectStatus | "all";
+
+export interface ProjectTrackerState {
+  projects: Project[];
+  statusFilter: StatusFilter;
+  selectedProjectId: string | null;
+}

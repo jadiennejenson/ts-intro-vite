@@ -1,92 +1,59 @@
-import { useState, useMemo, useEffect } from "react"; // Added this
-import type { Project } from "../models/project";
-import { projects as initialProjects } from "../data/projects";
-import { AddProjectForm } from "../components/AddProjectForm";
-import { ProjectDashboard } from "../components/ProjectDashboard";
-import { ProjectDetailPanel } from "../components/ProjectDetailPanel";
+import { useState } from 'react';
+import { projects } from '../data/projects';
+import {ProjectDashboard} from '../components/ProjectDashboard';
+import { ProjectStatus } from '../models/project';
 
- // Define this type here for simplicity
+type StatusFilter = ProjectStatus | 'all';
 
-const STATUS_OPTIONS: (Project["status"] | "all")[] = ["all", "active", "completed", "on-hold"];
+export default function ProjectsPage() {
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
 
-export function ProjectsPage() {
-  const [statusFilter, setStatusFilter] = useState<Project["status"] | "all">("all");
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
-  const [projects, setProjects] = useState<Project[]>(initialProjects);
-
-  // Derive filtered list
-  const filteredProjects = useMemo(() => {
-    return statusFilter === "all" 
-      ? projects 
+  const visibleProjects =
+    statusFilter === 'all'
+      ? projects
       : projects.filter((p) => p.status === statusFilter);
-  }, [projects, statusFilter]);
 
-  // ... (Keep your existing selectedProject and useEffect logic) ...
-
-useEffect(() => {
-  // If the currently selected project isn't in the filtered list, deselect it
-  const isStillVisible = filteredProjects.some(p => p.id === selectedProjectId);
-  if (selectedProjectId && !isStillVisible) {
-    setSelectedProjectId(null);
-  }
-}, [filteredProjects, selectedProjectId]);
-  
   return (
-    <div className="mx-auto w-full max-w-5xl px-4 py-8">
-      <header className="mb-8 flex flex-wrap items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold">Project Management</h1>
+    <div className="mx-auto w-full max-w-5xl px-4 py-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold text-slate-900">Projects</h1>
+          <p className="mt-1 text-sm text-slate-600">
+            Filter projects by status.
+          </p>
+        </div>
 
-        {/* 2. ADD FILTER UI */}
-        <div className="flex items-center gap-2">
-          <label htmlFor="status-filter" className="text-sm font-medium text-slate-600">
-            Filter by:
-          </label>
-          <select
-            id="status-filter"
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value as any)}
-            className="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm shadow-sm focus:border-blue-500 focus:outline-none"
+        <div className="flex items-center gap-3">
+          <label
+            htmlFor="statusFilter"
+            className="text-sm font-medium text-slate-700"
           >
-            {STATUS_OPTIONS.map((status) => (
-              <option key={status} value={status}>
-                {status.charAt(0).toUpperCase() + status.slice(1)}
-              </option>
-            ))}
+            Status
+          </label>
+
+          <select
+            id="statusFilter"
+            className="h-10 rounded-md border border-slate-300 bg-white px-3 text-sm text-slate-900"
+            value={statusFilter}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              setStatusFilter(e.target.value as StatusFilter);
+            }}
+          >
+            <option value="all">All</option>
+            <option value={ProjectStatus.Active}>Active</option>
+            <option value={ProjectStatus.Completed}>Completed</option>
+            <option value={ProjectStatus.OnHold}>On Hold</option>
           </select>
         </div>
-      </header>
-
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <div className="mb-6">
-            <AddProjectForm onAdd={handleAddProject} />
-          </div>
-          
-          {/* Dashboard now receives the filtered list */}
-          <ProjectDashboard
-            projects={filteredProjects}
-            selectedId={selectedProjectId}
-            onProjectClick={setSelectedProjectId}
-          />
-        </div>
-
-        <aside className="space-y-6">
-          <ProjectDetailPanel projectId={selectedProjectId} projects={projects} />
-          
-          {selectedProject && (
-            <div className="rounded border p-4 shadow-sm">
-              <h2 className="font-bold">{selectedProject.name} Details</h2>
-              <p className="text-sm text-slate-600 capitalize">Status: {selectedProject.status}</p>
-              <button 
-                onClick={() => setSelectedProjectId(null)}
-                className="mt-2 text-sm text-blue-600 hover:underline"
-              >
-                Close
-              </button>
-            </div>
-          )}
-        </aside>
       </div>
+
+      <div className="mt-6">
+        <ProjectDashboard projects={visibleProjects} />
+      </div>
+
+      <p className="mt-4 text-sm text-slate-600">
+        Current filter: <span className="font-medium">{statusFilter}</span>
+      </p>
     </div>
   );
 }
