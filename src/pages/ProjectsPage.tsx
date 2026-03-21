@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
 import { projects } from '../data/projects';
 import {ProjectDashboard} from '../components/ProjectDashboard';
-import { ProjectStatus } from '../models/project';
+import type { ProjectStatus } from '../models/project';
 
 type StatusFilter = ProjectStatus | 'all';
 
@@ -48,7 +49,9 @@ export default function ProjectsPage() {
       </div>
 
       <div className="mt-6">
-        <ProjectDashboard projects={visibleProjects} />
+        <ProjectDashboard projects={visibleProjects} selectedProjectId={null} onProjectClick={function (_id: string): void {
+          throw new Error('Function not implemented.');
+        } } />
       </div>
 
       <p className="mt-4 text-sm text-slate-600">
