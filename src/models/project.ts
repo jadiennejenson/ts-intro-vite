@@ -4,56 +4,50 @@ export type StatusFilter = Project["status"] | "all";
 
 export type StatusInput = ProjectStatus | string | null | undefined;
 
+
+
 export interface Project {
-  /** A stable identifier we never want to accidentally change */
   readonly id: string;
-
-  /** Human-friendly name shown in the UI */
   name: string;
-
-  /** Current workflow status */
   status: ProjectStatus;
-
-  /** ISO date string (e.g., 2025-01-15). Optional because not all projects have a deadline yet. */
-  dueDate?: string;
-
-  /** Tags are a list, so we use an array type */
-  tags: string[];
-
-  /** Optional free-form notes */
+  dueDate?: string;        // optional — but what format? ISO? US?
+  tags?: string[] | null;  // optional AND nullable — why both?
   notes?: string;
-  // These are the “completeness” fields we’ll validate
   ownerEmail?: string;
-  estimatedHours?: number; // important: 0 is a valid number, but it's falsy
-  description?: string; // optional, but if provided should be an array
-  days?: number; // optional, but if provided should be a number
-
+  estimatedHours?: number; // 0 is valid but falsy — a trap!
+  description?: string;
+  days?: number;           // what does this mean? duration? remaining?
+  clientName: string;
 }
+
 
 export const projects: Project[] = [
  {
-    id: "p1",
-    name: "Client onboarding flow",
-    status: "draft",
-    ownerEmail: "pm@company.com",
-    estimatedHours: 12,
-    description: "Define steps and screens",
-    tags: [],
-  },{
-    id: "p2",
-    name: "Bug bash",
-    status: "active",
-    ownerEmail: "qa@company.com",
-    estimatedHours: 0, // intentionally 0 to test truthiness pitfalls
-    description: "One-day bug cleanup",
-    tags: [],
-  },{
+   id: "p1",
+   name: "Client onboarding flow",
+   status: "draft",
+   ownerEmail: "pm@company.com",
+   estimatedHours: 12,
+   description: "Define steps and screens",
+   tags: [],
+   clientName: ""
+ },{
+   id: "p2",
+   name: "Bug bash",
+   status: "active",
+   ownerEmail: "qa@company.com",
+   estimatedHours: 0, // intentionally 0 to test truthiness pitfalls
+   description: "One-day bug cleanup",
+   tags: [],
+   clientName: ""
+ },{
     id: "p3",
     name: "New landing page",
     status: "blocked",
     estimatedHours: 8,
     description: "Waiting on brand assets",
     tags: [],
+    clientName: ""
   }
 ];
 
@@ -83,21 +77,24 @@ export const projectA: Project = {
   id: "p1",
   name: "Client Website Redesign",
   status: "active",
-  tags: [], // Add tags as an empty array or with relevant strings
+  tags: [],
+  clientName: ""
 };
 
 export const projectC: Project = {
   id: "p3",
   name: "New Landing Page",
   status: "blocked",
-  tags: [], // Add tags as an empty array or with relevant strings
+  tags: [],
+  clientName: ""
 };
 
 export const projectD: Project = {
   id: "p4",
   name: "SEO Optimization",
   status: "planned",
-  tags: [], // Add tags as an empty array or with relevant strings
+  tags: [],
+  clientName: ""
 };
 
 // ❌ Intentionally wrong to demonstrate safety:

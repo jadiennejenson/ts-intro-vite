@@ -4,6 +4,7 @@ import type { Project } from "../project-tracker";
 
 
 
+
 type ProjectDetailPanelProps = {
   projectId: string | null;
   projects: Project[];

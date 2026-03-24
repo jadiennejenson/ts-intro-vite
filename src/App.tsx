@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
 import './App.css';
 import { trackerCard } from './sandbox/trackerBasics';
@@ -17,7 +18,9 @@ export default function App() {
         <p className="mt-1 text-sm text-slate-600">Sprint 4: DOM Selection & Manipulation</p>
       </div>
 
-      <ProjectDashboard projects={projects} />
+      <ProjectDashboard projects={projects} selectedProjectId={null} onProjectClick={function (_id: string): void {
+        throw new Error('Function not implemented.');
+      } } />
 
       {/* Sprint 3 UI / Legacy Section */}
       <div className="mx-auto w-full max-w-5xl p-4 space-y-6">

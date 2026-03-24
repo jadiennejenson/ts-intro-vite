@@ -7,14 +7,14 @@ const maxCollaborators: number = 10;
 const isArchived: boolean = false;
 
 // These values might change as the project evolves
-let projectName = "Website Redesign";
-let taskCount = 3;
-let isActive = true;
+const projectName = "Website Redesign";
+const taskCount = 3;
+const isActive = true;
 
-let lastSyncedAt: Date | undefined = undefined;
+const lastSyncedAt: Date | undefined = undefined;
 
 // A value that is intentionally empty (e.g., no description provided)
-let projectDescription: string | null = null;
+const projectDescription: string | null = null;
 // Updating mutable values
 
 let completedTasks = 1;

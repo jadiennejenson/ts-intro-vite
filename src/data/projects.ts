@@ -22,7 +22,24 @@ export const projects: Project[] = [
     status: "planned",
     dueDate: "2025-03-01",
     tags: ["devops"]
+  },
+  {
+    id: "p-1004",
+    name: "Mobile App Redesign",
+    status: "active",
+    dueDate: "2025-04-30",
+    tags: ["mobile", "design"],
+    notes: "Kickoff meeting scheduled for next week."
+  },
+  {
+    id: "p-1005",
+    name: "Data Migration to New Warehouse",
+    status: "completed",
+    dueDate: "2025-01-20",
+    tags: ["data", "backend"],
+    notes: "Migration completed successfully with zero downtime."
   }
+
 ];
 
 // Try a deliberate mistake (then fix it):
