@@ -7,13 +7,16 @@ export const projects: Project[] = [
     status: "active",
     dueDate: "2025-02-15",
     tags: ["frontend", "ux"],
-    notes: "Waiting on final copy from marketing."
+    notes: "Waiting on final copy from marketing.",
+    clientName: ""
   },
   {
     id: "p-1002",
     name: "Billing Integration",
     status: "blocked",
-    tags: ["backend", "payments"]
+    tags: ["backend", "payments"],
+    notes: "Blocked by third-party API changes. Support ticket opened, awaiting response.",
+    clientName: ""
     // dueDate is optional, so we can omit it for now
   },
   {
@@ -21,7 +24,9 @@ export const projects: Project[] = [
     name: "QA Automation Setup",
     status: "planned",
     dueDate: "2025-03-01",
-    tags: ["devops"]
+    tags: ["devops"],
+    notes: "Initial research phase. Evaluating tools like Cypress and Playwright.",
+    clientName: ""
   },
   {
     id: "p-1004",
@@ -29,7 +34,8 @@ export const projects: Project[] = [
     status: "active",
     dueDate: "2025-04-30",
     tags: ["mobile", "design"],
-    notes: "Kickoff meeting scheduled for next week."
+    notes: "Kickoff meeting scheduled for next week.",
+    clientName: ""
   },
   {
     id: "p-1005",
@@ -37,7 +43,8 @@ export const projects: Project[] = [
     status: "completed",
     dueDate: "2025-01-20",
     tags: ["data", "backend"],
-    notes: "Migration completed successfully with zero downtime."
+    notes: "Migration completed successfully with zero downtime.",
+    clientName: ""
   }
 
 ];
