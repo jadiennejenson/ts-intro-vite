@@ -4,11 +4,15 @@ import type { Project } from "../models/project";
 //DOM manipulation is generally not recommended in React, but for this exercise, 
 //we will use it to demonstrate finding and highlighting rows based on project ID.
 
+
 type ProjectDashboardProps = {
   projects: Project[];
   selectedProjectId: string | null;
   onProjectClick: (id: string) => void;
   onDeleteProject?: (id: string) => void;
+  onEditProject?: (id: string) => void;
+  onToggleProjectStatus?: (id: string) => void;
+  addProject?: (project: Omit<Project, "id">) => void;
 };
 
 export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX.Element {
