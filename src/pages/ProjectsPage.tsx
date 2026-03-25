@@ -1,62 +1,64 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from 'react';
-import { projects } from '../data/projects';
-import {ProjectDashboard} from '../components/ProjectDashboard';
-import type { ProjectStatus } from '../models/project';
-
-type StatusFilter = ProjectStatus | 'all';
+import { useState, useMemo } from "react";
+import { AddProjectForm } from "../components/AddProjectForm";
+import { ProjectDashboard } from "../components/ProjectDashboard";
+import type { Project } from "../models/project";
 
 export default function ProjectsPage() {
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
+  // Global state for all projects
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [filterStatus, setFilterStatus] = useState<string>("All");
 
-  const visibleProjects =
-    statusFilter === 'all'
-      ? projects
-      : projects.filter((p) => p.status === statusFilter);
+  // Filtering logic for the "Status" dropdown in the header
+  const filteredProjects = useMemo(() => {
+    if (filterStatus === "All") return projects;
+    return projects.filter((p) => p.status.toLowerCase() === filterStatus.toLowerCase());
+  }, [projects, filterStatus]);
+
+  const handleAdd = (newProject: Project) => {
+    setProjects((prev) => [...prev, newProject]);
+  };
+
+  const handleDelete = (id: string) => {
+    setProjects((prev) => prev.filter((p) => p.id !== id));
+  };
 
   return (
-    <div className="mx-auto w-full max-w-5xl px-4 py-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <main className="mx-auto max-w-5xl space-y-8 p-6">
+      {/* 1. Header with Status Filter */}
+      <header className="flex items-center justify-between rounded-lg border bg-white p-4 shadow-sm">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">Projects</h1>
-          <p className="mt-1 text-sm text-slate-600">
-            Filter projects by status.
-          </p>
+          <h1 className="text-xl font-bold">Projects</h1>
+          <p className="text-xs text-slate-500">Filter projects by status.</p>
         </div>
-
-        <div className="flex items-center gap-3">
-          <label
-            htmlFor="statusFilter"
-            className="text-sm font-medium text-slate-700"
-          >
+        <div className="flex items-center gap-4">
+          <label className="flex items-center gap-2 text-sm font-medium">
             Status
+            <select 
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className="rounded border p-1"
+            >
+              <option value="All">All</option>
+              <option value="Active">Active</option>
+              <option value="Planned">Planned</option>
+              <option value="Blocked">Blocked</option>
+            </select>
           </label>
-
-          <select
-            id="statusFilter"
-            className="h-10 rounded-md border border-slate-300 bg-white px-3 text-sm text-slate-900"
-            value={statusFilter}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-              setStatusFilter(e.target.value as StatusFilter);
-            }}
-          >
-            <option value="all">All</option>
-            <option value="active">Active</option>
-            <option value="completed">Completed</option>
-            <option value="archived">Archived</option>
-          </select>
+          <span className="text-sm text-slate-600">Showing {filteredProjects.length} projects</span>
+          <button onClick={() => setProjects([])} className="text-sm font-medium text-blue-600">Clear</button>
         </div>
-      </div>
+      </header>
 
-      <div className="mt-6">
-        <ProjectDashboard projects={visibleProjects} selectedProjectId={null} onProjectClick={function (_id: string): void {
-          throw new Error('Function not implemented.');
-        } } />
-      </div>
+      {/* 2. Add Project Form */}
+      <AddProjectForm onAdd={handleAdd} />
 
-      <p className="mt-4 text-sm text-slate-600">
-        Current filter: <span className="font-medium">{statusFilter}</span>
-      </p>
-    </div>
+      {/* 3. Project Dashboard */}
+      <ProjectDashboard 
+        projects={filteredProjects} 
+        onDeleteProject={handleDelete}
+        selectedProjectId={null}
+        onProjectClick={() => {}} 
+      />
+    </main>
   );
 }

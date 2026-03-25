@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
 import './App.css';
-import { trackerCard } from './sandbox/trackerBasics';
 import { projects } from "./data/projects";
-import { countByStatus } from "./utils/projectUtils";
 import { ProjectDashboard } from "./components/ProjectDashboard";
 import HelperComponent from "./helpers/HelperComponent";
 
@@ -12,11 +10,6 @@ export default function App() {
 
   return (
     <main className="min-h-dvh bg-slate-50">
-      {/* Sprint 4 UI */}
-      <div className="mx-auto w-full max-w-5xl p-4">
-        <h1 className="text-2xl font-bold text-slate-900">Time Tracker</h1>
-        <p className="mt-1 text-sm text-slate-600">Sprint 4: DOM Selection & Manipulation</p>
-      </div>
 
       <ProjectDashboard projects={projects} selectedProjectId={null} onProjectClick={function (_id: string): void {
         throw new Error('Function not implemented.');
@@ -36,19 +29,6 @@ export default function App() {
           </button>
         </div>
 
-        <div className="p-6 bg-green-100 border-4 border-green-500 rounded-lg">
-          <h2 className="font-bold">Summary</h2>
-          <ul className="list-disc ml-5">
-            <li>Planned: {countByStatus(projects, "draft")}</li>
-            <li>Active: {countByStatus(projects, "active")}</li>
-            <li>Blocked: {countByStatus(projects, "paused")}</li>
-            <li>Done: {countByStatus(projects, "completed")}</li>
-          </ul>
-        </div>
-
-        <div className="mt-10 text-gray-600 text-xs">
-          <pre>{JSON.stringify(trackerCard, null, 2)}</pre>
-        </div>
       </div>
 
       
