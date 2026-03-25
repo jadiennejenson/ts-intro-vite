@@ -8,7 +8,8 @@ export const projects: Project[] = [
     dueDate: "2025-02-15",
     tags: ["frontend", "ux"],
     notes: "Waiting on final copy from marketing.",
-    clientName: ""
+    clientName: "",
+    client: undefined
   },
   {
     id: "p-1002",
@@ -18,6 +19,8 @@ export const projects: Project[] = [
     notes: "Blocked by third-party API changes. Support ticket opened, awaiting response.",
     clientName: ""
     // dueDate is optional, so we can omit it for now
+    ,
+    client: undefined
   },
   {
     id: "p-1003",
@@ -26,7 +29,8 @@ export const projects: Project[] = [
     dueDate: "2025-03-01",
     tags: ["devops"],
     notes: "Initial research phase. Evaluating tools like Cypress and Playwright.",
-    clientName: ""
+    clientName: "",
+    client: undefined
   },
   {
     id: "p-1004",
@@ -35,7 +39,8 @@ export const projects: Project[] = [
     dueDate: "2025-04-30",
     tags: ["mobile", "design"],
     notes: "Kickoff meeting scheduled for next week.",
-    clientName: ""
+    clientName: "",
+    client: undefined
   },
   {
     id: "p-1005",
@@ -44,7 +49,8 @@ export const projects: Project[] = [
     dueDate: "2025-01-20",
     tags: ["data", "backend"],
     notes: "Migration completed successfully with zero downtime.",
-    clientName: ""
+    clientName: "",
+    client: undefined
   }
 
 ];

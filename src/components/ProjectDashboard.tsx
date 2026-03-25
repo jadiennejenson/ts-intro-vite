@@ -80,8 +80,6 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
     card.append(title);
     container.append(card);
      }, [projects]);
-
-
      
   // 3. Combined useEffect for logging both Cards and Rows
   useEffect(() => {

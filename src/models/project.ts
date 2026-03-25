@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 export type ProjectStatus = "planned" |"blocked" | "draft" | "active" | "paused" | "done" | "completed" ;
 
 export type StatusFilter = Project["status"] | "all";
@@ -7,6 +9,7 @@ export type StatusInput = ProjectStatus | string | null | undefined;
 
 
 export interface Project {
+  client: ReactNode;
   readonly id: string;
   name: string;
   status: ProjectStatus;
@@ -30,7 +33,8 @@ export const projects: Project[] = [
    estimatedHours: 12,
    description: "Define steps and screens",
    tags: [],
-   clientName: ""
+   clientName: "",
+   client: undefined
  },{
    id: "p2",
    name: "Bug bash",
@@ -39,16 +43,18 @@ export const projects: Project[] = [
    estimatedHours: 0, // intentionally 0 to test truthiness pitfalls
    description: "One-day bug cleanup",
    tags: [],
-   clientName: ""
+   clientName: "",
+   client: undefined
  },{
-    id: "p3",
-    name: "New landing page",
-    status: "blocked",
-    estimatedHours: 8,
-    description: "Waiting on brand assets",
-    tags: [],
-    clientName: ""
-  }
+   id: "p3",
+   name: "New landing page",
+   status: "blocked",
+   estimatedHours: 8,
+   description: "Waiting on brand assets",
+   tags: [],
+   clientName: "",
+   client: undefined
+ }
 ];
 
 console.log("Loaded projects:", projects);
@@ -78,7 +84,8 @@ export const projectA: Project = {
   name: "Client Website Redesign",
   status: "active",
   tags: [],
-  clientName: ""
+  clientName: "",
+  client: undefined
 };
 
 export const projectC: Project = {
@@ -86,7 +93,8 @@ export const projectC: Project = {
   name: "New Landing Page",
   status: "blocked",
   tags: [],
-  clientName: ""
+  clientName: "",
+  client: undefined
 };
 
 export const projectD: Project = {
@@ -94,7 +102,8 @@ export const projectD: Project = {
   name: "SEO Optimization",
   status: "planned",
   tags: [],
-  clientName: ""
+  clientName: "",
+  client: undefined
 };
 
 // ❌ Intentionally wrong to demonstrate safety:

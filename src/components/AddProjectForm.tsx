@@ -31,7 +31,8 @@ export function AddProjectForm({ onAdd }: AddProjectFormProps) {
       dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // default to 1 week from now
       status,
       tags: [],
-      clientName: ""
+      clientName: "",
+      client: undefined
     };
 
     onAdd(newProject);
