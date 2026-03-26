@@ -53,19 +53,17 @@ const openPointsTotal: number = trackerCards
 //the filter function creates a new array containing only the 
 // elements of trackerCards that satisfy the condition t.status === "open".
   .filter((t) => t.status === "open")
-
-
   .reduce((sum, t) => sum + (t.daysleft || 0), 0);
 
 console.log("openCards", openCards);
 console.log("openPointsTotal", openPointsTotal); 
 
-const p3 = findProjectById(projects, "p3");
+/* const p3 = findProjectById(projects, "p3");
 if (p3) {
   console.log("Found p3:", p3.name, p3.status, p3.dueDate);
 } else {
   console.log("p3 not found (unexpected in sample data)");
-}
+} */
 
 
 function TrackerCard() {
