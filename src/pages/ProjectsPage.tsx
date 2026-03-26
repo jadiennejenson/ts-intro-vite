@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import { ProjectDashboard } from "../components/ProjectDashboard";
 import { AddProjectForm } from "../components/AddProjectForm";
@@ -10,7 +9,10 @@ type StatusFilter = ProjectStatus | 'all';
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([
   { id: "1", name: "Billing Integration", client: "", status: "Active" }, // Capital 'A'
-  { id: "2", name: "Client Onboarding", client: "", status: "Done" },    // Use 'Done' or 'Completed'
+  { id: "2", name: "Client Onboarding", client: "", status: "Done" },
+  { id: "3", name: "API Development", client: "", status: "Planned" },
+  { id: "4", name: "User Authentication", client: "", status: "Active" },
+  { id: "5", name: "Database Optimization", client: "", status: "Done" }    // Use 'Done' or 'Completed'
 ]);
 
   // 2. Add state to track the current filter
@@ -44,10 +46,10 @@ export default function ProjectsPage() {
             className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
           >
             <option value="all">All</option>
-            <option value="Active">Active</option>
-            <option value="Blocked">Blocked</option>
-            <option value="Planned">Planned</option>
-            <option value="Done">Done</option>
+            <option value="active">Active</option>
+            <option value="blocked">Blocked</option>
+            <option value="planned">Planned</option>
+            <option value="done">Done</option>
           </select>
         </div>
       </div>

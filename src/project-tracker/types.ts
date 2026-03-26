@@ -18,3 +18,9 @@ export interface ProjectTrackerState {
   statusFilter: StatusFilter;
   selectedProjectId: string | null;
 }
+
+export interface Project {
+  id: string;
+  name: string;
+  status: ProjectStatus; // Use the enum here
+}
