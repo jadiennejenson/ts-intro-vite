@@ -1,101 +1,93 @@
-import { useState, type FormEvent } from "react";
-import type { Project } from "../models/project";
+import { useState } from "react";
+import type { Project, ProjectStatus } from "../project-tracker";
+import type { StatusFilter } from "../pages/ProjectsPage";
 
-export type AddProjectFormProps = {
-  onAdd: (project: Project) => void;
-};
-
-function makeId() {
-  // Prefer a real UUID when available; fallback keeps the tutorial working everywhere.
-  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
-    return crypto.randomUUID();
-  }
-  return `p_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+interface AddProjectFormProps {
+  onAdd: (project: Omit<Project, 'id'>) => void;
+  count: number;
+  currentFilter: StatusFilter;
+  onFilterChange: (filter: StatusFilter) => void;
 }
 
 export function AddProjectForm({ onAdd }: AddProjectFormProps) {
-  const [name, setName] = useState<string>("");
-  const [clientName, setClientName] = useState<string>("");
-  const [status, setStatus] = useState<Project["status"]>("planned");
+  // 1. Controlled Input State
+  const [name, setName] = useState("My project");
+  const [client, setClient] = useState("Thor");
+  const [status, setStatus] = useState<ProjectStatus>("Active");
 
-  const canSubmit = name.trim().length > 0 && clientName.trim().length > 0;
-
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  // 2. Form Submission Handler
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Call the parent's add function
+    onAdd({
+      name,
+      client,
+      status
+    });
 
-    if (!canSubmit) return;
-
-    const newProject: Project = {
-      id: makeId(),
-      name: name.trim(),
-      dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // default to 1 week from now
-      status,
-      tags: [],
-      clientName: "",
-      client: undefined
-    };
-
-    onAdd(newProject);
-
-    // Reset controlled inputs by resetting state.
+    // Optional: Reset form to defaults after adding
     setName("");
-    setClientName("");
-    setStatus("planned");
-  }
+    setClient("");
+  };
 
   return (
-    <section className="rounded-lg border border-slate-200 bg-white p-4">
-      <h2 className="mb-3 text-lg font-semibold text-slate-900">Add Project</h2>
-
-      <form onSubmit={handleSubmit} className="grid gap-3">
-        <label className="grid gap-1">
-          <span className="text-sm font-medium text-slate-700">Project name</span>
+    <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+      <h2 className="text-lg font-bold mb-6">Add Project</h2>
+      
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Project Name Input */}
+        <div>
+          <label className="block text-sm font-semibold mb-2">Project name</label>
           <input
-            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
             type="text"
+            className="w-full p-2 border border-slate-200 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="e.g., Marketing Website Refresh"
+            required
           />
-        </label>
+        </div>
 
-        <label className="grid gap-1">
-          <span className="text-sm font-medium text-slate-700">Client name</span>
+        {/* Client Name Input */}
+        <div>
+          <label className="block text-sm font-semibold mb-2">Client name</label>
           <input
-            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
             type="text"
-            value={clientName}
-            onChange={(e) => setClientName(e.target.value)}
-            placeholder="e.g., Acme Co"
+            className="w-full p-2 border border-slate-200 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+            value={client}
+            onChange={(e) => setClient(e.target.value)}
+            required
           />
-        </label>
+        </div>
 
-        <label className="grid gap-1">
-          <span className="text-sm font-medium text-slate-700">Status</span>
+        {/* Status Dropdown */}
+        <div>
+          <label className="block text-sm font-semibold mb-2">Status</label>
           <select
-            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
+            className="w-full p-2 border border-slate-200 rounded-md bg-white outline-none focus:ring-2 focus:ring-blue-500"
             value={status}
-            onChange={(e) => setStatus(e.target.value as Project["status"])}
+            onChange={(e) => setStatus(e.target.value as ProjectStatus)}
           >
-            <option value="planned">Planned</option>
-            <option value="active">Active</option>
-            <option value="completed">Completed</option>
+            <option value="Active">Active</option>
+            <option value="Blocked">Blocked</option>
+            <option value="Planned">Planned</option>
+            <option value="Done">Done</option>
           </select>
-        </label>
+        </div>
 
-        <div className="flex items-center gap-3 pt-1">
-          <button
+        {/* Action Row */}
+        <div className="flex items-center gap-4 pt-2">
+          <button 
             type="submit"
-            disabled={!canSubmit}
-            className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50"
+            className="bg-[#0f172a] text-white px-6 py-2 rounded-md font-medium hover:bg-slate-800 transition-colors"
           >
             Add project
           </button>
-          <p className="text-sm text-slate-600">
+          <p className="text-slate-400 text-sm italic">
             Tip: Press Enter to submit when focused in a field.
           </p>
         </div>
       </form>
-    </section>
+    </div>
   );
 }
