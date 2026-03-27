@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import { ProjectDashboard } from "../components/ProjectDashboard";
 import { AddProjectForm } from "../components/AddProjectForm";

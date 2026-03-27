@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import type { Project , ProjectStatus } from "../models/project";
+import type { Project } from "../models/project";
 
-type StatusFilter = ProjectStatus | 'all';
 
 type ProjectDashboardProps = {
   projects: Project[];

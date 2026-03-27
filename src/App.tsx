@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Home from './pages/home'; // 1. Import your Home component
+import Home from './pages/home';
+import Tracker from './pages/Tracker';
 import ProjectsPage from './pages/ProjectsPage';
 
 export default function App() {
@@ -18,7 +19,7 @@ export default function App() {
         {/* 3. Render the actual Home component here */}
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<ProjectsPage />} />
-        <Route path="/tracker" element={<>Tracker</>} />
+        <Route path="/tracker" element={<Tracker />} />
         <Route path="/help" element={<>Help</>} />
       </Routes>
     </Router>
