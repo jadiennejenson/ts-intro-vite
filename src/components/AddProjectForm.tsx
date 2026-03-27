@@ -1,42 +1,49 @@
 import { useState } from "react";
 import type { Project, ProjectStatus } from "../project-tracker";
-import type { StatusFilter } from "../pages/ProjectsPage";
 
-interface AddProjectFormProps {
+// FIX 1: Define StatusFilter locally or import from your types file. 
+// Importing types FROM a Page component often causes circular dependency errors.
+export type StatusFilter = ProjectStatus | "All";
+
+export interface AddProjectFormProps {
   onAdd: (project: Omit<Project, 'id'>) => void;
   count: number;
   currentFilter: StatusFilter;
   onFilterChange: (filter: StatusFilter) => void;
 }
 
-export function AddProjectForm({ onAdd }: AddProjectFormProps) {
-  // 1. Controlled Input State
+// FIX 2: Destructure all required props defined in the Interface.
+// If you don't use count/filter here, you still need to include them or make them optional in the interface.
+export function AddProjectForm({ 
+  onAdd,
+  count }: AddProjectFormProps) {
+  
   const [name, setName] = useState("My project");
   const [client, setClient] = useState("Thor");
   const [status, setStatus] = useState<ProjectStatus>("Active");
 
-  // 2. Form Submission Handler
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Call the parent's add function
     onAdd({
       name,
       client,
       status
     });
 
-    // Optional: Reset form to defaults after adding
     setName("");
     setClient("");
   };
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
-      <h2 className="text-lg font-bold mb-6">Add Project</h2>
+      {/* UI logic using the props if needed */}
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-lg font-bold">Add Project</h2>
+        <span className="text-sm text-slate-500">Total: {count}</span>
+      </div>
       
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Project Name Input */}
         <div>
           <label className="block text-sm font-semibold mb-2">Project name</label>
           <input
@@ -48,7 +55,6 @@ export function AddProjectForm({ onAdd }: AddProjectFormProps) {
           />
         </div>
 
-        {/* Client Name Input */}
         <div>
           <label className="block text-sm font-semibold mb-2">Client name</label>
           <input
@@ -60,7 +66,6 @@ export function AddProjectForm({ onAdd }: AddProjectFormProps) {
           />
         </div>
 
-        {/* Status Dropdown */}
         <div>
           <label className="block text-sm font-semibold mb-2">Status</label>
           <select
@@ -75,7 +80,6 @@ export function AddProjectForm({ onAdd }: AddProjectFormProps) {
           </select>
         </div>
 
-        {/* Action Row */}
         <div className="flex items-center gap-4 pt-2">
           <button 
             type="submit"
@@ -83,9 +87,6 @@ export function AddProjectForm({ onAdd }: AddProjectFormProps) {
           >
             Add project
           </button>
-          <p className="text-slate-400 text-sm italic">
-            Tip: Press Enter to submit when focused in a field.
-          </p>
         </div>
       </form>
     </div>
