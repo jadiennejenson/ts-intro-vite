@@ -12,6 +12,7 @@ type ProjectDashboardProps = {
   addProject?: (project: Omit<Project, "id">) => void;
 };
 
+
 export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX.Element {
   // 1. Unified Refs
   const containerRef = useRef<HTMLElement | null>(null);
@@ -167,3 +168,5 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
     </section>
   );
 }
+
+export default ProjectDashboard;
