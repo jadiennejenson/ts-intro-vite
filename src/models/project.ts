@@ -54,6 +54,26 @@ export const projects: Project[] = [
    tags: [],
    clientName: "",
    client: undefined
+ },{
+    id: "p4",
+    name: "SEO optimization",
+    status: "planned",
+    estimatedHours: 5,
+    description: "Improve search rankings",
+    tags: [],
+    clientName: "",
+    client: undefined
+ },{
+   id: "p5",
+   name: "Mobile app",
+   status: "done",
+   ownerEmail: "pm@company.com",
+   estimatedHours: 10,
+   description: "Develop mobile application",
+   tags: [],
+   clientName: "",
+   client: undefined
+
  }
 ];
 
