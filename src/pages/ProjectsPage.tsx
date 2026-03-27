@@ -8,12 +8,12 @@ type StatusFilter = ProjectStatus | 'all';
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([
-  { id: "1", name: "Billing Integration", client: "", status: "Active" }, // Capital 'A'
-  { id: "2", name: "Client Onboarding", client: "", status: "Done" },
-  { id: "3", name: "API Development", client: "", status: "Planned" },
-  { id: "4", name: "User Authentication", client: "", status: "Active" },
-  { id: "5", name: "Database Optimization", client: "", status: "Done" }    // Use 'Done' or 'Completed'
-]);
+    { id: "1", name: "Billing Integration", client: "", status: "Active" },
+    { id: "2", name: "Client Onboarding", client: "", status: "Done" },
+    { id: "3", name: "API Development", client: "", status: "Planned" },
+    { id: "4", name: "User Authentication", client: "", status: "Active" },
+    { id: "5", name: "Database Optimization", client: "", status: "Done" }
+  ]);
 
   // 2. Add state to track the current filter
   const [filter, setFilter] = useState<StatusFilter>('all');

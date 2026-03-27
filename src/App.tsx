@@ -1,27 +1,26 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import './App.css';
-import { projects } from "./data/projects";
-import { ProjectDashboard } from "./components/ProjectDashboard";
-import HelperComponent from "./helpers/HelperComponent";
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Home from './pages/home'; // 1. Import your Home component
+import ProjectsPage from './pages/ProjectsPage';
 
 export default function App() {
-  
-
   return (
-    <main className="min-h-dvh bg-slate-50">
-      <ProjectDashboard projects={projects} selectedProjectId={null} onProjectClick={function (_id: string): void {
-        throw new Error('Function not implemented.');
-      } } />
-
-      {/* Sprint 3 UI / Legacy Section */}
-      <div className="mx-auto w-full max-w-5xl p-4 space-y-6">
-        <div className="bg-blue-100 border-4 border-blue-500 rounded-lg p-8">
-          <HelperComponent />
+    <Router>
+      <nav className="p-4 bg-slate-100 flex gap-4 w-full">
+        <div className="max-w-5xl mx-auto flex gap-4 w-full"> 
+          <Link to="/">Home</Link> {/* 2. Changed /Home to / to match the route */}
+          <Link to="/projects">Projects</Link>
+          <Link to="/tracker">Tracker</Link>
+          <Link to="/help">Help</Link>
         </div>
+      </nav>
 
-      </div>
-
-      
-    </main>
+      <Routes>
+        {/* 3. Render the actual Home component here */}
+        <Route path="/" element={<Home />} />
+        <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/tracker" element={<>Tracker</>} />
+        <Route path="/help" element={<>Help</>} />
+      </Routes>
+    </Router>
   );
 }

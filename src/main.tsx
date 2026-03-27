@@ -34,7 +34,7 @@ console.log(svc2.count()); // 1
 // `this` in svc2.count() refers to svc2.
 
 const serviceTest4 = new ProjectService(projects);
-  serviceTest4.projects.push({
+  serviceTest4.add({
     id: 'hacked', name: 'Rogue Project',
     status: 'active', clientName: 'Nobody',
     client: undefined

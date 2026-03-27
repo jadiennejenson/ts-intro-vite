@@ -1,9 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import type { Project } from "../models/project";
+import type { Project , ProjectStatus } from "../models/project";
 
-//DOM manipulation is generally not recommended in React, but for this exercise, 
-//we will use it to demonstrate finding and highlighting rows based on project ID.
-
+type StatusFilter = ProjectStatus | 'all';
 
 type ProjectDashboardProps = {
   projects: Project[];
@@ -103,9 +101,6 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
     });
   }, [projects]);
   
-
-
-
   return (
     <section ref={containerRef} className="mx-auto w-full max-w-5xl p-6" aria-label="Project dashboard">
       <header className="mb-8">

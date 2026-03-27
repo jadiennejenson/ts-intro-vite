@@ -1,6 +1,6 @@
 import { projects } from "../data/projects";
 import { formatDueDate } from "../utils/projectUtils";
-import { findProjectById } from "../utils/projectUtils";
+/* import { findProjectById } from "../utils/projectUtils"; */
 
 
 type TrackerCard = {
@@ -66,6 +66,7 @@ if (p3) {
 } */
 
 
+// eslint-disable-next-line react-refresh/only-export-components
 function TrackerCard() {
   //the return statement defines the JSX that will be rendered by this component. 
   // It includes two sections: one for all projects and another for active projects. 
