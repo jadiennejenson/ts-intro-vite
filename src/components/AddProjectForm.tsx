@@ -38,7 +38,7 @@ export function AddProjectForm({
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
       {/* UI logic using the props if needed */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-6 w-full px-6 mb-12">
         <h2 className="text-lg font-bold">Add Project</h2>
         <span className="text-sm text-slate-500">Total: {count}</span>
       </div>
@@ -80,7 +80,7 @@ export function AddProjectForm({
           </select>
         </div>
 
-        <div className="flex items-center gap-4 pt-2">
+        <div className="flex items-center gap-4 pt-2 w-full px-6 mb-12">
           <button 
             type="submit"
             className="bg-[#0f172a] text-white px-6 py-2 rounded-md font-medium hover:bg-slate-800 transition-colors"

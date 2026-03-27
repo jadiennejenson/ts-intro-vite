@@ -3,8 +3,8 @@ import { ProjectDashboard } from '../components/ProjectDashboard';
 import { AddProjectForm } from "../components/AddProjectForm";
 import type { Project, ProjectStatus } from "../project-tracker";
 
-// FIX 1: Add 'export' so AddProjectForm can import this type
-export type StatusFilter = ProjectStatus | 'all';
+// FIX 1: Match the casing ("All") used in AddProjectForm.tsx
+export type StatusFilter = ProjectStatus | 'All';
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([
@@ -15,9 +15,9 @@ export default function ProjectsPage() {
     { id: "5", name: "Database Optimization", client: "Heimdall", status: "Done" }
   ]);
 
-  const [filter, setFilter] = useState<StatusFilter>('all');
+  // FIX 2: Initialize with capital "All"
+  const [filter, setFilter] = useState<StatusFilter>('All');
 
-  // FIX 2: Explicitly define the return object to satisfy the Project interface
   const addProject = (projectData: Omit<Project, "id">) => {
     const newProject: Project = { 
       ...projectData, 
@@ -27,13 +27,14 @@ export default function ProjectsPage() {
   };
 
   const filteredProjects = projects.filter((project) => {
-    if (filter === 'all') return true;
+    // FIX 3: Match capital "All"
+    if (filter === 'All') return true;
     return project.status === filter;
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 py-12">
-      <div className="max-w-5xl mx-auto px-4 mb-12">
+    <div className="w-full px-6 mb-12">
+      <div className="w-full px-6 mb-12">
         <AddProjectForm 
           onAdd={addProject} 
           count={filteredProjects.length} 
@@ -51,7 +52,8 @@ export default function ProjectsPage() {
             onChange={(e) => setFilter(e.target.value as StatusFilter)}
             className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm"
           >
-            <option value="all">All Projects</option>
+            {/* FIX 4: Match values to the StatusFilter type */}
+            <option value="All">All Projects</option>
             <option value="Active">Active</option>
             <option value="Blocked">Blocked</option>
             <option value="Planned">Planned</option>
@@ -60,8 +62,8 @@ export default function ProjectsPage() {
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto px-4">
-        {/* FIX 3: Pass the filtered projects to the dashboard instead of the full list */}
+      <div className="w-full px-6 mb-12">
+        {/* FIX 5: Pass filteredProjects to the dashboard */}
         <ProjectDashboard projects={filteredProjects}/>
       </div>
     </div>

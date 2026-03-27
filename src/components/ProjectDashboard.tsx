@@ -142,16 +142,16 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
 
       {/* List Version */}
       <ul className="divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white shadow-sm">
-        {projects.map((p) => (
+        {projects.map((project) => (
           <li
-            key={`row-${p.id}`}
+            key={`row-${project.id}`}
             data-role="project-row"
-            data-project-id={p.id}
+            data-project-id={project.id}
             className="flex items-center justify-between gap-3 px-4 py-3 transition-colors"
           >
             <div className="min-w-0">
-              <div className="truncate text-sm font-semibold text-slate-900">{p.name}</div>
-              <div className="text-xs text-slate-400">ID: {p.id}</div>
+              <div className="truncate text-sm font-semibold text-slate-900">{project.name}</div>
+              <div className="text-xs text-slate-400">ID: {project.status}</div>
             </div>
 
             <button
