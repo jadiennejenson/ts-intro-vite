@@ -1,29 +1,16 @@
-import React, { useEffect, useRef } from "react";
-import type { Project } from "../models/project";
-
+import React, { useRef } from "react";
+import type { Project } from "../project-tracker";
 
 type ProjectDashboardProps = {
   projects: Project[];
-  selectedProjectId: string | null;
-  onProjectClick: (id: string) => void;
-  onDeleteProject?: (id: string) => void;
-  onEditProject?: (id: string) => void;
-  onToggleProjectStatus?: (id: string) => void;
-  addProject?: (project: Omit<Project, "id">) => void;
 };
 
 
 export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX.Element {
-  // 1. Unified Refs
   const containerRef = useRef<HTMLElement | null>(null);
   const idInputRef = useRef<HTMLInputElement | null>(null);
-  const cardsContainerRef = useRef<HTMLDivElement | null>(null);
 
-//useRef is used to create mutable references to DOM elements. Here, we have three refs:
-// - containerRef: Refers to the main section that contains both the grid and list versions of the projects.
-// - idInputRef: Refers to the input field where users can type a project ID to find.
-// - cardsContainerRef: Refers to the container that holds the grid cards, allowing us to manipulate it directly if needed.
-  // 2. Logic for Finding and Highlighting Rows
+  // Logic for finding and highlighting rows
   function clearHighlights(root: HTMLElement) {
     const highlighted = root.querySelectorAll<HTMLElement>("[data-role='project-row'].bg-amber-50");
     highlighted.forEach((el) => {
@@ -55,63 +42,19 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
     detailsBtn?.focus();
   }
 
-   useEffect(() => {
-    const container = cardsContainerRef.current;
-    if (!container) return;
+  // Example DOM-level card creation and debug logging were removed to keep the dashboard simple and responsive.
 
-    // Clear previous content so we don't duplicate during HMR
-    container.replaceChildren();
-
-    // Create a card for the first project as an example
-    //the createElement method is used to create a new article element that represents a project card.
-
-  const card = document.createElement("article");
-    card.className =
-      "rounded-xl border border-slate-200 bg-white p-4 shadow-sm";
-    card.setAttribute("data-testid", "project-card");
-
-    
-    const title = document.createElement("h3");
-    title.className = "text-base font-semibold text-slate-900";
-    title.textContent = `Example card: ${projects[0]?.name ?? "(no project)"}`;
-
-    card.append(title);
-    container.append(card);
-     }, [projects]);
-     
-  // 3. Combined useEffect for logging both Cards and Rows
-  useEffect(() => {
-    const root = containerRef.current;
-    if (!root) return;
-
-    // Log the Grid Cards
-    const cards = root.querySelectorAll<HTMLElement>("[data-project-card]");
-    cards.forEach((card) => {
-      console.log("Card Data:", { 
-        id: card.dataset.id, 
-        status: card.dataset.status 
-      });
-    });
-
-    // Log the List Rows
-    const rows = root.querySelectorAll<HTMLElement>("[data-role='project-row']");
-    rows.forEach((row) => {
-      const title = row.querySelector(".truncate")?.textContent?.trim();
-      console.log("Found Row:", { id: row.dataset.projectId, title });
-    });
-  }, [projects]);
-  
   return (
-    <section ref={containerRef} className="mx-auto w-full max-w-5xl p-6" aria-label="Project dashboard">
+    <section ref={containerRef} className="mx-auto w-full max-w-7xl xl:max-w-screen-xl p-6 xl:p-8" aria-label="Project dashboard">
       <header className="mb-8">
         <h1 className="text-2xl font-bold text-slate-900">Project Dashboard</h1>
-        <p className="text-sm text-slate-600">Find by ID and focus row.</p>
+        <p className="text-sm text-slate-600">Find a project by its ID and review the board below.</p>
 
-        <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
           <input
             ref={idInputRef}
             type="text"
-            placeholder="Enter project id (e.g., p1)"
+            placeholder="Enter project id (e.g. 1)"
             className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm"
           />
           <button
@@ -125,17 +68,23 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
       </header>
 
       {/* Grid Version */}
-      <div className="mb-10 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="mb-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {projects.map((p) => (
           <article
             key={p.id}
             data-project-card
             data-id={p.id}
             data-status={p.status}
-            className="rounded-xl border border-slate-200 bg-white p-4"
+            className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
           >
             <h2 className="text-lg font-semibold text-slate-900">{p.name}</h2>
-            <p className="mt-1 text-sm text-slate-600">Status: {p.status}</p>
+            <p className="mt-1 text-sm text-slate-600">Client: {p.client}</p>
+            <div className="mt-3 flex flex-wrap gap-2 text-sm text-slate-700">
+              <span className="font-medium">Status:</span>
+              <span>{p.status}</span>
+              <span className="font-medium">ID:</span>
+              <span>{p.id}</span>
+            </div>
           </article>
         ))}
       </div>
@@ -147,11 +96,15 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
             key={`row-${project.id}`}
             data-role="project-row"
             data-project-id={project.id}
-            className="flex items-center justify-between gap-3 px-4 py-3 transition-colors"
+            className="flex w-full items-center justify-between gap-3 px-4 py-3 transition-colors"
           >
             <div className="min-w-0">
               <div className="truncate text-sm font-semibold text-slate-900">{project.name}</div>
-              <div className="text-xs text-slate-400">ID: {project.status}</div>
+              <div className="mt-1 flex flex-wrap gap-3 text-xs text-slate-500">
+                <span className="truncate">Client: {project.client}</span>
+                <span>Status: {project.status}</span>
+                <span>ID: {project.id}</span>
+              </div>
             </div>
 
             <button
@@ -161,7 +114,6 @@ export function ProjectDashboard({ projects }: ProjectDashboardProps): React.JSX
             >
               Details
             </button>
-
           </li>
         ))}
       </ul>

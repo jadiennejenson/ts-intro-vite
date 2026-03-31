@@ -33,38 +33,45 @@ export default function ProjectsPage() {
   });
 
   return (
-    <div className="w-full px-6 mb-12">
-      <div className="w-full px-6 mb-12">
-        <AddProjectForm 
-          onAdd={addProject} 
-          count={filteredProjects.length} 
-          currentFilter={filter}
-          onFilterChange={(newFilter) => setFilter(newFilter)} 
-        />
-        
-        <div className="mt-6 flex items-center gap-3">
-          <label htmlFor="statusFilter" className="text-sm font-medium text-slate-700">
-            Filter by status:
-          </label>
-          <select
-            id="statusFilter"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value as StatusFilter)}
-            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm"
-          >
-            {/* FIX 4: Match values to the StatusFilter type */}
-            <option value="All">All Projects</option>
-            <option value="Active">Active</option>
-            <option value="Blocked">Blocked</option>
-            <option value="Planned">Planned</option>
-            <option value="Done">Done</option>
-          </select>
-        </div>
-      </div>
+    <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 xl:px-8">
+      <div className="mx-auto flex w-full max-w-7xl xl:max-w-screen-xl flex-col gap-8 xl:gap-12">
+        <div className="grid gap-6 xl:grid-cols-2">
+          <AddProjectForm onAdd={addProject} count={filteredProjects.length} />
 
-      <div className="w-full px-6 mb-12">
-        {/* FIX 5: Pass filteredProjects to the dashboard */}
-        <ProjectDashboard projects={filteredProjects}/>
+          <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="space-y-4">
+              <div>
+                <h2 className="text-lg font-semibold text-slate-900">Project filter</h2>
+                <p className="text-sm text-slate-500">Keep the list small and easy to scan.</p>
+              </div>
+
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <label htmlFor="statusFilter" className="text-sm font-medium text-slate-700">
+                  Filter by status
+                </label>
+
+                <select
+                  id="statusFilter"
+                  value={filter}
+                  onChange={(e) => setFilter(e.target.value as StatusFilter)}
+                  className="w-full max-w-xs rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm"
+                >
+                  <option value="All">All Projects</option>
+                  <option value="Active">Active</option>
+                  <option value="Blocked">Blocked</option>
+                  <option value="Planned">Planned</option>
+                  <option value="Done">Done</option>
+                </select>
+              </div>
+
+              <div className="rounded-2xl bg-slate-50 p-4 text-sm text-slate-600">
+                Showing <span className="font-semibold text-slate-900">{filteredProjects.length}</span> project{filteredProjects.length === 1 ? "" : "s"}.
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <ProjectDashboard projects={filteredProjects} />
       </div>
     </div>
   );

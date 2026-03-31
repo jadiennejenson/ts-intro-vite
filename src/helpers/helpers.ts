@@ -1,12 +1,5 @@
 // This file contains various helper functions that can be used across the app to perform common operations related to tasks and projects.
 // It includes functions for summing hours, formatting task labels, assignee names, and status, as well as summarizing tasks into a readable format.
-export function sumHours(hours: number[]): number {
-
-  // This function takes an array of numbers representing hours and returns their total sum.
-  // The reduce method iterates through the array, adding each hour to a running total, starting from 0.
-  // We start at 0 so even an empty array returns 0 (not undefined)
-  return hours.reduce((total, h) => total + h, 0)
-}
 
 // This helper function formats a task label by combining the project name and task name into a single string for display purposes.
 export const formatTaskLabel = (taskName: string, projectName: string): string => {

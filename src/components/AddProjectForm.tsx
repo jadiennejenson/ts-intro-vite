@@ -1,28 +1,18 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import type { Project, ProjectStatus } from "../project-tracker";
-
-// FIX 1: Define StatusFilter locally or import from your types file. 
-// Importing types FROM a Page component often causes circular dependency errors.
-export type StatusFilter = ProjectStatus | "All";
 
 export interface AddProjectFormProps {
   onAdd: (project: Omit<Project, 'id'>) => void;
   count: number;
-  currentFilter: StatusFilter;
-  onFilterChange: (filter: StatusFilter) => void;
 }
 
-// FIX 2: Destructure all required props defined in the Interface.
-// If you don't use count/filter here, you still need to include them or make them optional in the interface.
-export function AddProjectForm({ 
-  onAdd,
-  count }: AddProjectFormProps) {
+export function AddProjectForm({ onAdd, count }: AddProjectFormProps) {
   
   const [name, setName] = useState("My project");
   const [client, setClient] = useState("Thor");
   const [status, setStatus] = useState<ProjectStatus>("Active");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     onAdd({
@@ -37,12 +27,11 @@ export function AddProjectForm({
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
-      {/* UI logic using the props if needed */}
-      <div className="flex justify-between items-center mb-6 w-full px-6 mb-12">
+      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="text-lg font-bold">Add Project</h2>
         <span className="text-sm text-slate-500">Total: {count}</span>
       </div>
-      
+
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label className="block text-sm font-semibold mb-2">Project name</label>
@@ -80,10 +69,10 @@ export function AddProjectForm({
           </select>
         </div>
 
-        <div className="flex items-center gap-4 pt-2 w-full px-6 mb-12">
-          <button 
+        <div className="flex flex-col items-stretch gap-4 pt-2 sm:flex-row sm:justify-end">
+          <button
             type="submit"
-            className="bg-[#0f172a] text-white px-6 py-2 rounded-md font-medium hover:bg-slate-800 transition-colors"
+            className="rounded-md bg-slate-900 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-800"
           >
             Add project
           </button>

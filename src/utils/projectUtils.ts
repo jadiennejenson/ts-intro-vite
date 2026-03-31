@@ -1,8 +1,8 @@
 // src/utils/projectUtils.ts
-import type { Project, /* ProjectStatus */ } from "../models/project";
+import type { Project, ProjectStatus } from "../models";
 
 
-/* export function getProjectsByStatus(
+export function getProjectsByStatus(
   projects: Project[],
   status: ProjectStatus
 ): Project[] {
@@ -14,17 +14,17 @@ export function countByStatus(
   status: ProjectStatus
 ): number {
   return getProjectsByStatus(projects, status).length;
-} */
+}
 
 export function formatDueDate(project: Project): string {
   // Optional property: we must handle the "missing" case
   if (!project.dueDate) return "No due date";
   return project.dueDate;
 }
-/* export function upcomingDeadlines(projects: Project[]): Project[] {
+export function upcomingDeadlines(projects: Project[]): Project[] {
   // Business rule: only projects that actually have a due date belong here
   return projects.filter((p) => p.dueDate !== undefined);
-} */
+}
 
 export function printDueDateUnsafe(project: Project): string {
   // Deliberate optional-property mistake (uncomment to see the error):

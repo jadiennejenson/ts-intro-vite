@@ -1,9 +1,8 @@
-import { formatTaskLabel, sumHours, formatAssignee, formatStatus, summarizeTask, getTaskHours, type Task } from './helpers'
+import { formatTaskLabel, formatAssignee, formatStatus, summarizeTask, getTaskHours, type Task } from './helpers'
 
 // Example usage of the helper functions. 
 // This code demonstrates how to use the various helpers defined in the 
 // helpers module to perform common operations related to tasks and projects.
-console.log('Total hours (should be 6):', sumHours([1, 2, 3]))
 console.log(formatTaskLabel('Fix login bug', 'Website Redesign'))
 console.log(formatAssignee())
 console.log(formatAssignee('  Sam  '))
@@ -25,7 +24,7 @@ for (const t of tasks) {
 
 // Calculate the total hours from the tasks using the getTaskHours helper to safely extract hours, 
 // even if some tasks are missing that information.
-const total = sumHours(tasks.map(getTaskHours))
+const total = tasks.map(getTaskHours).reduce((sum, hours) => sum + hours, 0)
 console.log('Total tracked hours:', total)
 
 // This is a simple React component that serves as a placeholder to indicate that the helpers module is loaded.
