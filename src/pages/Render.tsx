@@ -1,6 +1,4 @@
 import React, { type JSX } from "react";
-import {} from "../utils/generics";
-import { findById, identity } from "../utils/generics";
 
 interface Section {
   title: string;

@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Tracker from './pages/Tracker';
 import ProjectsPage from './pages/ProjectsPage';
-import  Render  from  './pages/Render'
+import { Render } from './pages/Render'
 
 export default function App() {
   return (
