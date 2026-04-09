@@ -11,10 +11,10 @@ export function updateEntity<T extends { id: unknown; kind: unknown; createdAt: 
   return { ...entity, ...patch };
 }
 
-// Example “view model” helpers using Pick/Omit
+//l” helpers using Pick/Omit
 export type ProjectListItem = Pick<
-  import("./types").Project,
+  import("../types").Project,
   "id" | "name" | "status"
 >;
 
-export type TaskEditFormModel = Omit<import("./types").Task, "createdAt">;
+export type TaskEditFormModel = Omit<import("../types").Task, "createdAt">;
