@@ -34,7 +34,7 @@ export default function ProjectsPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 xl:px-8">
-      <div className="mx-auto flex w-full max-w-7xl xl:max-w-screen-xl flex-col gap-8 xl:gap-12">
+      <div className="mx-auto flex w-full max-w-7xl xl:max-w-screen-xl 2xl:max-w-screen-2xl flex-col gap-8 xl:gap-12">
         <div className="grid gap-6 xl:grid-cols-2">
           <AddProjectForm onAdd={addProject} count={filteredProjects.length} />
 

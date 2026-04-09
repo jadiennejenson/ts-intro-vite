@@ -49,7 +49,7 @@ export default function Tracker() {
       </header>
 
       {/* 2. Functional Timers */}
-      <div className="w-full max-w-3xl space-y-4">
+      <div className="w-full max-w-4xl xl:max-w-6xl space-y-4">
         {timers.map((timer) => (
           <div key={timer.id} className="flex items-center justify-between p-6 border rounded-xl shadow-sm hover:shadow-md transition-shadow">
             <div>

@@ -7,8 +7,8 @@ export default function Home() {
     /* 1. Use w-full and px-4 to prevent content from hitting the edges on mobile */
     <div className="flex flex-col items-center gap-8 p-4 sm:p-12 bg-slate-50 min-h-screen w-full">
       
-      {/* 2. Blue Vite Box: Uses w-full to grow, but max-w-2xl to stop it from getting TOO wide */}
-      <div className="w-full max-w-2xl bg-blue-50 border-4 border-blue-400 rounded-xl p-6 sm:p-12 text-center shadow-sm">
+      {/* 2. Blue Vite Box: Uses w-full to grow, but max-w-4xl on large screens and max-w-6xl on xl screens */}
+      <div className="w-full max-w-4xl xl:max-w-6xl bg-blue-50 border-4 border-blue-400 rounded-xl p-6 sm:p-12 text-center shadow-sm">
         <p className="text-xs sm:text-sm text-slate-600 mb-4 font-medium">
           Helpers Module Loaded - Check Console for Output
         </p>
@@ -27,7 +27,7 @@ export default function Home() {
       </div>
 
       {/* 4. Green Summary Box: Follows the same responsive width pattern */}
-      <div className="w-full max-w-2xl bg-green-50 border-4 border-green-500 rounded-xl p-6 sm:p-8 shadow-sm">
+      <div className="w-full max-w-4xl xl:max-w-6xl bg-green-50 border-4 border-green-500 rounded-xl p-6 sm:p-8 shadow-sm">
         <h2 className="text-center font-bold text-slate-800 text-xl mb-4 underline decoration-green-300 underline-offset-4">
           Summary
         </h2>
