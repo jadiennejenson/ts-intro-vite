@@ -4,7 +4,10 @@ import Tracker from './pages/Tracker';
 import ProjectsPage from './pages/ProjectsPage';
 import { Render } from './pages/Render'
 import Generics from './pages/Generics';
-import  UnionsPage  from './pages/UnionsPage';
+import './App.css';
+import Unions  from './pages/Unions';
+
+
 
 export default function App() {
   return (
@@ -18,6 +21,7 @@ export default function App() {
           <Link to="/render">Render</Link>
           <Link to="/generics">Generics</Link>
           <Link to="/unions">Unions</Link>
+
         </div>
       </nav>
 
@@ -29,7 +33,7 @@ export default function App() {
           <Route path="/tracker" element={<Tracker />} />
           <Route path="/render" element={<Render />} />
           <Route path="/generics" element={<Generics />} />
-          <Route path="/unions" element={<UnionsPage />} />
+          <Route path="/unions" element={<Unions />} />
         </Routes>
       </main>
     </Router>

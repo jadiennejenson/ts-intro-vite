@@ -5,7 +5,7 @@ import App from './App.tsx'
 
 //temp for testing
 
-import { ProjectService } from './services/ProjectService'; import { projects } from './data/projects'; 
+import { ProjectService } from './services/ProjectService'; import { projects } from './data/projects';
 
 //const svc = new ProjectService(projects); 
 //console.log('ProjectService count:', svc.count()); 
