@@ -42,46 +42,13 @@ for (const e of entities) {
 
 app.append(container);
 
-  return (
-  <div className="min-h-screen bg-slate-50 p-6">
-    <div className="grid gap-4 md:grid-cols-2">
-      {entities.map(e => renderEntityCard(e))}
-    </div>
-   </div>
-);
-}
-
-export function Unions2() {
-  const entities: Entity[] = [
-    {
-      kind: "project",
-      id: "p1",
-      name: "Website Redesign",
-      status: "active",
-      budgetUsd: 12000,
-    },
-    {
-      kind: "task",
-      id: "t1",
-      name: "Build landing page",
-      projectId: "p1",
-      dueDateIso: "2026-01-15",
-      completed: false,
-    },
-    {
-      kind: "member",
-      id: "m1",
-      name: "Avery",
-      role: "dev",
-      availability: "full-time",
-    },
-  ];
-
-  return (
-  <div className="min-h-screen bg-slate-50 p-6">
-    <div className="grid gap-4 md:grid-cols-2">
-      {entities.map(e => renderEntityCard(e))}
-    </div>
+ const data = ['Item 1', 'Item 2'];
+return (
+  <div>
+    {data.map((text, i) => (
+      <div key={i}>{text}</div> // ✅ This is a ReactNode
+    ))}
   </div>
 );
 }
+
