@@ -5,38 +5,37 @@ import ProjectsPage from './pages/ProjectsPage';
 import { Render } from './pages/Render'
 import Generics from './pages/Generics';
 import './App.css';
-import Unions  from './pages/Unions';
+import Unions from './pages/Unions';
 
-
+// ✅ Import the Unions PAGE, not the individual card
 
 export default function App() {
   return (
     <div className="flex flex-col min-h-screen">
-    <Router>
-      <nav className="p-4 bg-slate-100 flex gap-4 w-full shrink-0">
-        <div className="max-w-5xl mx-auto flex gap-4 w-full justify-center"> 
-          <Link to="/">Home</Link>
-          <Link to="/projects">Projects</Link>
-          <Link to="/tracker">Tracker</Link>
-          <Link to="/render">Render</Link>
-          <Link to="/generics">Generics</Link>
-          <Link to="/unions">Unions</Link>
+      <Router>
+        <nav className="p-4 bg-slate-100 flex gap-4 w-full shrink-0">
+          <div className="max-w-5xl mx-auto flex gap-4 w-full justify-center"> 
+            <Link to="/">Home</Link>
+            <Link to="/projects">Projects</Link>
+            <Link to="/tracker">Tracker</Link>
+            <Link to="/render">Render</Link>
+            <Link to="/generics">Generics</Link>
+            <Link to="/unions">Unions</Link>
+          </div>
+        </nav>
 
-        </div>
-      </nav>
-
-      {/* This main tag expands to fill all remaining vertical space */}
-      <main className="flex-grow">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/tracker" element={<Tracker />} />
-          <Route path="/render" element={<Render />} />
-          <Route path="/generics" element={<Generics />} />
-          <Route path="/unions" element={<Unions />} />
-        </Routes>
-      </main>
-    </Router>
-  </div>
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/tracker" element={<Tracker />} />
+            <Route path="/render" element={<Render />} />
+            <Route path="/generics" element={<Generics />} />
+            {/* ✅ Point the route to the Unions component */}
+            <Route path="/unions" element={<Unions />} />
+          </Routes>
+        </main>
+      </Router>
+    </div>
   );
 }

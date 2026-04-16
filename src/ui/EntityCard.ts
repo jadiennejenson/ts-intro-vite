@@ -1,6 +1,6 @@
 import type { Entity } from "../domain/entities";
 
-export function renderEntityCard(entity: Entity): HTMLDivElement {
+export function EntityCard(entity: Entity): HTMLDivElement {
   const card = document.createElement("div");
   card.className =
     "rounded border border-slate-300 bg-white p-4 shadow-sm flex flex-col gap-2";
