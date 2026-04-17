@@ -1,5 +1,4 @@
 // Adjust this import path to where your StatusFilter type/union is defined.
-import type {  } from "../project-tracker/types";
 import type { Project } from "../project-tracker";
 
 
