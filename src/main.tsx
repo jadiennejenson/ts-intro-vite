@@ -1,13 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
 import App from './App.tsx'
-
 //temp for testing
-
 import { ProjectService } from './services/ProjectService'; import { projects } from './data/projects';
-
-import "./style.css";
 import type { Entity } from "./domain/entities";
 import { EntityCard } from "./ui/EntityCard";
 
