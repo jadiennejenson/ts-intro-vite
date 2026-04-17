@@ -5,9 +5,12 @@ import ProjectsPage from './pages/ProjectsPage';
 import { Render } from './pages/Render'
 import Generics from './pages/Generics';
 import './App.css';
+
 import Unions from './pages/Unions';
+import "./index.css";
 
 // ✅ Import the Unions PAGE, not the individual card
+
 
 export default function App() {
   return (
