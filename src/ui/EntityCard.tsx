@@ -1,5 +1,6 @@
 import type { Entity } from "../domain/entities";
 
+
 export function EntityCard(entity: Entity): HTMLDivElement {
   const card = document.createElement("div");
   card.className =
@@ -11,6 +12,8 @@ export function EntityCard(entity: Entity): HTMLDivElement {
   const title = document.createElement("h3");
   title.className = "text-lg font-semibold";
   title.textContent = entity.name;
+
+  //the entity.kind is the discriminator, so we can use it to show a badge and also to narrow the type in the switch statement below
 
   const badge = document.createElement("span");
   badge.className =

@@ -6,7 +6,6 @@ type FormOptions = {
   editingId: string | null;
   onDone: () => void;
 };
-
 export function renderForm(opts: FormOptions) {
   const wrap = document.createElement("div");
 

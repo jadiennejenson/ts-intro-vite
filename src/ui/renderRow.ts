@@ -13,6 +13,7 @@ export function renderRow(entity: Entity, onDelete: (id: string) => void, onEdit
   const meta = document.createElement("div");
   meta.className = "text-sm text-gray-600";
 
+
   // Narrow the union safely
   switch (entity.entityType) {
     case "project":
