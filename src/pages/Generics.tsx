@@ -11,7 +11,6 @@ export default function Generics() {
   useEffect(() => {
     const existing = loadEntities();
     if (existing.length > 0) {
-      setEntities(existing);
       return;
     }
 
@@ -46,7 +45,6 @@ export default function Generics() {
 
     const initialEntities = [project, task, member];
     saveEntities(initialEntities);
-    setEntities(initialEntities);
   }, []);
 
   const handleAction = (id: string, action: string) => {
