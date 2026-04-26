@@ -161,7 +161,134 @@ export default function Generics() {
             <li><strong>Persistent Storage:</strong> Mixed entity arrays stored in localStorage with validation</li>
           </ul>
         </div>
+
+        {/* Generic Functions Section */}
+        <div className="mt-8 bg-white rounded-lg shadow-md p-6 border-l-4 border-orange-500">
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">Generic Functions Demo</h2>
+          <p className="text-slate-600 mb-6">
+            These functions demonstrate TypeScript generic patterns: function overloads, generic constraints, and type-safe transformations.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Function Overloads Demo */}
+            <div className="bg-slate-50 p-4 rounded-lg">
+              <h3 className="font-semibold text-slate-800 mb-2">Function Overloads</h3>
+              <div className="text-sm text-slate-600 font-mono bg-slate-800 text-orange-300 p-3 rounded">
+{`function getEntityById<T extends AnyEntity>(
+  entities: T[], id: string
+): T | undefined;
+function getEntityById(
+  entities: AnyEntity[], id: string
+): AnyEntity | undefined;
+function getEntityById(
+  entities: AnyEntity[], id: string
+): AnyEntity | undefined {
+  return entities.find(e => e.id === id);
+}`}
+              </div>
+              <div className="mt-3 p-3 bg-orange-50 rounded">
+                <p className="text-sm text-slate-700">
+                  Result: {(() => {
+                    const found = getEntityById(entities, "p1");
+                    return found ? (found.kind === "project" ? (found as Project).name : "not a project") : "not found";
+                  })()}
+                </p>
+              </div>
+            </div>
+
+            {/* Generic Filter Demo */}
+            <div className="bg-slate-50 p-4 rounded-lg">
+              <h3 className="font-semibold text-slate-800 mb-2">Generic Filter Function</h3>
+              <div className="text-sm text-slate-600 font-mono bg-slate-800 text-orange-300 p-3 rounded">
+{`function filterByKind<T extends AnyEntity>(
+  entities: T[], 
+  kind: T["kind"]
+): T[] {
+  return entities.filter(e => e.kind === kind);
+}
+
+// Usage with type inference
+const activeProjects = filterByKind(entities, "project");`}
+              </div>
+              <div className="mt-3 p-3 bg-orange-50 rounded">
+                <p className="text-sm text-slate-700">
+                  Projects found: {filterByKind(entities, "project").length}
+                </p>
+              </div>
+            </div>
+
+            {/* Generic Mapper Demo */}
+            <div className="bg-slate-50 p-4 rounded-lg">
+              <h3 className="font-semibold text-slate-800 mb-2">Generic Mapper</h3>
+              <div className="text-sm text-slate-600 font-mono bg-slate-800 text-orange-300 p-3 rounded">
+{`function mapEntities<T extends AnyEntity, K>(
+  entities: T[],
+  selector: (e: T) => K
+): K[] {
+  return entities.map(selector);
+}
+
+// Extract names from any entity type
+const names = mapEntities(entities, e => e.id);`}
+              </div>
+              <div className="mt-3 p-3 bg-orange-50 rounded">
+                <p className="text-sm text-slate-700">
+                  Entity IDs: {mapEntities(entities, e => e.id).join(", ") || "none"}
+                </p>
+              </div>
+            </div>
+
+            {/* Generic Reducer Demo */}
+            <div className="bg-slate-50 p-4 rounded-lg">
+              <h3 className="font-semibold text-slate-800 mb-2">Generic Reducer</h3>
+              <div className="text-sm text-slate-600 font-mono bg-slate-800 text-orange-300 p-3 rounded">
+{`function groupByKind<T extends AnyEntity>(
+  entities: T[]
+): Record<string, T[]> {
+  return entities.reduce((acc, entity) => {
+    const key = entity.kind;
+    (acc[key] ??= []).push(entity);
+    return acc;
+  }, {} as Record<string, T[]>);
+}`}
+              </div>
+              <div className="mt-3 p-3 bg-orange-50 rounded">
+                <p className="text-sm text-slate-700">
+                  Groups: {Object.keys(groupByKind(entities)).join(", ") || "none"}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
+}
+
+// Helper functions defined outside component to demonstrate generic patterns
+
+// Function overloads - different return types based on input
+function getEntityById<T extends AnyEntity>(entities: T[], id: string): T | undefined;
+function getEntityById(entities: AnyEntity[], id: string): AnyEntity | undefined;
+function getEntityById(entities: AnyEntity[], id: string): AnyEntity | undefined {
+  return entities.find((e) => e.id === id);
+}
+
+// Generic filter function with constraint
+function filterByKind<T extends AnyEntity>(entities: T[], kind: T["kind"]): T[] {
+  return entities.filter((e) => e.kind === kind);
+}
+
+// Generic mapper with callback
+function mapEntities<T extends AnyEntity, K>(entities: T[], selector: (e: T) => K): K[] {
+  return entities.map(selector);
+}
+
+// Generic reducer to group entities
+function groupByKind<T extends AnyEntity>(entities: T[]): Record<string, T[]> {
+  return entities.reduce((acc, entity) => {
+    const key = entity.kind;
+    (acc[key] ??= []).push(entity);
+    return acc;
+  }, {} as Record<string, T[]>);
 }
