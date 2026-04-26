@@ -2,6 +2,16 @@ import { useState } from "react";
 import type { Entity } from "../domain/entities";
 
 
+// Sample roadmap data
+const roadmapData: Record<string, { phase: string; tasks: string[] }[]> = {
+  p1: [
+    { phase: "Phase 1: Discovery", tasks: ["Requirements gathering", "User research", "Competitor analysis"] },
+    { phase: "Phase 2: Design", tasks: ["Wireframes", "UI mockups", "Design system"] },
+    { phase: "Phase 3: Development", tasks: ["Frontend implementation", "Backend setup", "CMS integration"] },
+    { phase: "Phase 4: Launch", tasks: ["Testing", "Deployment", "Training"] },
+  ],
+};
+
 export default function Unions() {
   const entities: Entity[] = [
     { kind: "project", id: "p1", name: "Website Redesign", status: "active", budgetUsd: 12000 },
@@ -9,7 +19,18 @@ export default function Unions() {
     { kind: "member", id: "m1", name: "Avery", role: "dev", availability: "full-time" },
   ];
 
-const [filter, setFilter] = useState<Entity["kind"] | "all">("all");
+  const [filter, setFilter] = useState<Entity["kind"] | "all">("all");
+  const [selectedRoadmapProject, setSelectedRoadmapProject] = useState<string | null>(null);
+
+  // Handle roadmap button click
+  const handleViewRoadmap = (projectId: string) => {
+    setSelectedRoadmapProject(projectId);
+  };
+
+  // Close roadmap modal
+  const closeRoadmap = () => {
+    setSelectedRoadmapProject(null);
+  };
 
 
 // Filter the list based on the button clicked
@@ -74,7 +95,12 @@ const filteredEntities = filter === "all"
         <button className="text-xs font-bold text-green-600 hover:underline">Mark Complete</button>
       )}
       {e.kind === "project" && (
-        <button className="text-xs font-bold text-blue-600 hover:underline">View Roadmap</button>
+        <button 
+          onClick={() => handleViewRoadmap(e.id)}
+          className="text-xs font-bold text-blue-600 hover:underline"
+        >
+          View Roadmap
+        </button>
       )}
       {e.kind === "member" && (
         <button className="text-xs font-bold text-purple-600 hover:underline">Assign Task</button>
@@ -83,6 +109,33 @@ const filteredEntities = filter === "all"
   </div>
 ))}
       </div>
+
+      {/* Roadmap Modal */}
+      {selectedRoadmapProject && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={closeRoadmap}>
+          <div className="bg-white rounded-xl p-6 max-w-lg w-full mx-4 shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold text-slate-800">Project Roadmap</h2>
+              <button onClick={closeRoadmap} className="text-slate-400 hover:text-slate-600 text-2xl">×</button>
+            </div>
+            <div className="space-y-4">
+              {roadmapData[selectedRoadmapProject]?.map((phase, idx) => (
+                <div key={idx} className="border-l-4 border-blue-500 pl-4">
+                  <h3 className="font-bold text-slate-700">{phase.phase}</h3>
+                  <ul className="mt-2 space-y-1">
+                    {phase.tasks.map((task, tIdx) => (
+                      <li key={tIdx} className="text-sm text-slate-500 flex items-center gap-2">
+                        <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
+                        {task}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )) || <p className="text-slate-500">No roadmap available</p>}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
