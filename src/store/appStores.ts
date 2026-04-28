@@ -6,7 +6,8 @@ export function makeId(prefix: string) {
 }
 
 const now = Date.now();
-
+//our initial seed data for the stores, which can be modified or expanded as needed. 
+// This provides a starting point for testing and development.
 const seedProjects: Project[] = [
   {
     id: "project_alpha",
